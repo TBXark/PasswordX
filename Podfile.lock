@@ -18,7 +18,7 @@ DEPENDENCIES:
   - SnapKit
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
+  trunk:
     - CryptoSwift
     - IQKeyboardManagerSwift
     - RxCocoa

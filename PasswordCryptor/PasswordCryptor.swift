@@ -364,7 +364,10 @@ private protocol HashPasswordCryptor: PasswordCryptor {
 
 extension HashPasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String {
-        let raw = masterKey + identity
+        var raw = identity.count > masterKey.count ?  (masterKey + identity) : (identity + masterKey)
+        if let checkSum = raw.data(using: .utf8)?.checksum() {
+            raw = "\(checkSum % 99)\(raw)"
+        }
         let data = try JSONEncoder().encode(raw)
         let encryptString = hash(input: data).base64EncodedString()
         return encryptString
@@ -417,9 +420,9 @@ private protocol CrcPasswordCryptor: PasswordCryptor {
 
 private extension CrcPasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String {
-        var raw = masterKey + identity
+        var raw = identity.count > masterKey.count ?  (masterKey + identity) : (identity + masterKey)
         if let checkSum = raw.data(using: .utf8)?.checksum() {
-            raw = "\(checkSum)\(raw)"
+            raw = "\(checkSum % 99)\(raw)"
         }
         let data = try JSONEncoder().encode(raw)
         let encryptString = crc(input: data).base64EncodedString()
@@ -457,19 +460,28 @@ private protocol CipherPasswordCryptor: PasswordCryptor {
 
 extension CipherPasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String {
-        // key 32 iv 12/8
-        var raw = masterKey + identity
-        if let checkSum = raw.data(using: .utf8)?.checksum() {
-            raw = "\(checkSum)\(raw)"
+        var keyRaw = masterKey
+        var iv = Array<UInt8>(repeating: 0, count: ivLength)
+        
+        if let checkSum = (masterKey + identity).data(using: .utf8)?.checksum() {
+            keyRaw = "\(checkSum % 99)\(keyRaw)"
+            if iv.count > 0 {
+                iv[0] = UInt8(checkSum & 0x00ff)
+            }
+            if iv.count > 1 {
+                iv[1] = UInt8(checkSum >> 8)
+            }
         }
-        var key = try JSONEncoder().encode(raw).base64EncodedData().prefix(keyLength)
+        
+        var key = try JSONEncoder().encode(keyRaw).base64EncodedData().prefix(keyLength)
         if key.count < keyLength {
             key.append(contentsOf: Array<UInt8>(repeating: 0, count: keyLength - key.count))
         }
-        let iv = Array<UInt8>(repeating: 0, count: ivLength)
+        
         let identityData = (try JSONEncoder().encode(identity)).base64EncodedData().bytes
-        let data = try encrypt(key: key.bytes, iv: iv, data: identityData)
-        return Data(data).base64EncodedString()
+        let passwordData = try encrypt(key: key.bytes, iv: iv, data: identityData)
+
+        return Data(passwordData).base64EncodedString()
     }
 
 }
