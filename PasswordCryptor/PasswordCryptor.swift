@@ -193,7 +193,7 @@ public struct PasswordCryptorService {
     
     static func encrypt(rawPassword: String, passwordCharacterSet: [PasswordCharacterType], passwordStyle: PasswordStyle, length: Int) ->  String {
         var raw = rawPassword
-        guard raw.count > 0 else {
+        guard raw.count > 0, length > 0, passwordCharacterSet.count > 0 else {
             return raw
         }
         var realPasswordCharacterSet = passwordCharacterSet
@@ -417,7 +417,10 @@ private protocol CrcPasswordCryptor: PasswordCryptor {
 
 private extension CrcPasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String {
-        let raw = masterKey + identity
+        var raw = masterKey + identity
+        if let checkSum = raw.data(using: .utf8)?.checksum() {
+            raw = "\(checkSum)\(raw)"
+        }
         let data = try JSONEncoder().encode(raw)
         let encryptString = crc(input: data).base64EncodedString()
         return encryptString
@@ -455,7 +458,11 @@ private protocol CipherPasswordCryptor: PasswordCryptor {
 extension CipherPasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String {
         // key 32 iv 12/8
-        var key =  (try JSONEncoder().encode(String(masterKey + identity))).base64EncodedData().prefix(keyLength)
+        var raw = masterKey + identity
+        if let checkSum = raw.data(using: .utf8)?.checksum() {
+            raw = "\(checkSum)\(raw)"
+        }
+        var key = try JSONEncoder().encode(raw).base64EncodedData().prefix(keyLength)
         if key.count < keyLength {
             key.append(contentsOf: Array<UInt8>(repeating: 0, count: keyLength - key.count))
         }
