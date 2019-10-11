@@ -72,7 +72,7 @@ class SettingViewController: UIViewController {
         }
         
         
-        navigationItem.leftBarButtonItem = QuickBarButton.build(title: "Cancel", action: {[weak self] _ in
+        navigationItem.leftBarButtonItem = QuickBarButton.build(title: "Close", action: {[weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         })
         

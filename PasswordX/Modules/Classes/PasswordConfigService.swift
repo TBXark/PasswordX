@@ -8,6 +8,12 @@
 
 import PasswordCryptor
 
+extension UserDefaults {
+    static var passwordGroup: UserDefaults {
+        return UserDefaults(suiteName: "group.tbxark.passwordx") ?? UserDefaults.standard
+    }
+}
+
 class PasswordConfigService {
     
     static let shared = PasswordConfigService()
@@ -19,6 +25,7 @@ class PasswordConfigService {
         static let canSaveMasterKeyCachekey = "can.save.master.key"
     }
     
+    
     private(set) var configValue: PasswordConfig
     
     var canSaveMasterKey: Bool {
@@ -26,7 +33,7 @@ class PasswordConfigService {
             if !canSaveMasterKey {
                 masterKey = nil
             }
-            UserDefaults.standard.set(canSaveMasterKey, forKey: Config.canSaveMasterKeyCachekey)
+            UserDefaults.passwordGroup.set(canSaveMasterKey, forKey: Config.canSaveMasterKeyCachekey)
         }
     }
    
@@ -35,13 +42,13 @@ class PasswordConfigService {
             guard canSaveMasterKey else {
                 return
             }
-            UserDefaults.standard.set(masterKey, forKey: Config.masterKeyCachekey)
+            UserDefaults.passwordGroup.set(masterKey, forKey: Config.masterKeyCachekey)
         }
     }
     
-    private(set) var identityHistory: [String] = UserDefaults.standard.stringArray(forKey: Config.identityHistoryKey) ?? [] {
+    private(set) var identityHistory: [String] = UserDefaults.passwordGroup.stringArray(forKey: Config.identityHistoryKey) ?? [] {
         didSet {
-            UserDefaults.standard.set(identityHistory, forKey: Config.identityHistoryKey)
+            UserDefaults.passwordGroup.set(identityHistory, forKey: Config.identityHistoryKey)
         }
     }
     
@@ -51,11 +58,11 @@ class PasswordConfigService {
     
     
     private init() {
-        let canSave = UserDefaults.standard.bool(forKey: Config.canSaveMasterKeyCachekey)
-        let key = canSave ? UserDefaults.standard.string(forKey: Config.masterKeyCachekey) : nil
+        let canSave = UserDefaults.passwordGroup.bool(forKey: Config.canSaveMasterKeyCachekey)
+        let key = canSave ? UserDefaults.passwordGroup.string(forKey: Config.masterKeyCachekey) : nil
         self.canSaveMasterKey = canSave
         self.masterKey = key
-        if let json =  UserDefaults.standard.data(forKey: Config.configCacheKey),
+        if let json =  UserDefaults.passwordGroup.data(forKey: Config.configCacheKey),
             let model = try? JSONDecoder().decode(PasswordConfig.self, from: json) {
             self.configValue = model
         } else {
@@ -70,8 +77,8 @@ class PasswordConfigService {
     func update(config: PasswordConfig) throws {
         self.configValue = config
         let json = try JSONEncoder().encode(config)
-        UserDefaults.standard.set(json, forKey: Config.configCacheKey)
-        UserDefaults.standard.synchronize()
+        UserDefaults.passwordGroup.set(json, forKey: Config.configCacheKey)
+        UserDefaults.passwordGroup.synchronize()
         NotificationCenter.default.post(name: configChangeNotitfication, object: nil)
     }
     
