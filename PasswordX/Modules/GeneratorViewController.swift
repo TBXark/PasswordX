@@ -18,12 +18,14 @@ class GeneratorViewController: UIViewController {
     private let headerContainer = UIView()
 
     private let passwordTextField = UITextField()
-    private let passwordCopyButton = UIButton(type: .custom)
+    private let passwordCopyButton = QuickButton()
     
 
     private let identityTextField = UITextField()
     private let masterKeyTextField = UITextField()
-    private let masterHiddenButton = UIButton(type: .custom)
+    private let masterHiddenButton = QuickButton()
+
+    private let settingButton = QuickButton()
 
     private let disposeBag = DisposeBag()
 
@@ -31,6 +33,7 @@ class GeneratorViewController: UIViewController {
         super.viewDidLoad()
         layoutViewController()
         bindObserver()
+        bindTargetAction()
     }
     
     
@@ -104,7 +107,7 @@ class GeneratorViewController: UIViewController {
             identityTextField.placeholder = "Password identity"
             masterKeyTextField.placeholder = "Master key"
             masterKeyTextField.isSecureTextEntry = true
-            masterKeyTextField.keyboardType = .asciiCapableNumberPad
+            masterKeyTextField.keyboardType = .asciiCapable
             
             masterHiddenButton.setImage(UIImage(named: "visibility_on"), for: .normal)
             masterHiddenButton.setImage(UIImage(named: "visibility_off"), for: .selected)
@@ -166,7 +169,6 @@ class GeneratorViewController: UIViewController {
                 make.left.right.equalTo(view)
             }
             
-            let settingButton = UIButton()
             settingButton.setImage(UIImage(named: "setting"), for: .normal)
             view.addSubview(settingButton)
             
@@ -196,26 +198,41 @@ class GeneratorViewController: UIViewController {
             .map({ PasswordTextRender.render(font: UIFont.boldSystemFont(ofSize: 18), password: $0)})
             .bind(to: passwordTextField.rx.attributedText)
             .disposed(by: disposeBag)
+    }
+    
+    private func bindTargetAction() {
                 
-        passwordCopyButton.rx.tap.asObservable()
-            .subscribe(onNext: {[weak self] _ in
-                guard let self = self else {
-                    return
-                }
+        passwordCopyButton.clickAction = {[weak self] _ in
+            guard let self = self else {
+                return
+            }
+            if self.identityTextField.text?.isEmpty ?? true {
+                UIAlertController.show(title: "Warning", message: "Please enter identity value.", closeTitle: "OK", closeHandler: {[weak self] _ in
+                    self?.identityTextField.becomeFirstResponder()
+                }, in: self)
+            } else if self.masterKeyTextField.text?.isEmpty ?? true {
+                UIAlertController.show(title: "Warning", message: "Please enter master key.", closeTitle: "OK", closeHandler:  {[weak self] _ in
+                    self?.masterKeyTextField.becomeFirstResponder()
+                }, in: self)
+            } else {
                 UIPasteboard.general.string = self.passwordTextField.text ?? ""
                 TextHUG.show(text: "Copied!", in: self.headerContainer)
-            })
-            .disposed(by: disposeBag)
+            }
+        }
         
-        masterHiddenButton.rx.tap.asObservable()
-            .subscribe(onNext: {[weak self] _ in
-                guard let self = self else {
-                    return
-                }
-                self.masterHiddenButton.isSelected.toggle()
-                self.masterKeyTextField.isSecureTextEntry = self.masterHiddenButton.isSelected
-            })
-            .disposed(by: disposeBag)
+        masterHiddenButton.clickAction = {[weak self] _ in
+            guard let self = self else {
+                 return
+             }
+             self.masterHiddenButton.isSelected.toggle()
+             self.masterKeyTextField.isSecureTextEntry = self.masterHiddenButton.isSelected
+        }
+        
+        settingButton.clickAction = {[weak self] _ in
+            let nav = UINavigationController(rootViewController: SettingViewController())
+            self?.present(nav, animated: true, completion: nil)
+        }
+
     }
 
 }

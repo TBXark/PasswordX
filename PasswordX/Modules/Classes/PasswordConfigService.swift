@@ -17,6 +17,7 @@ class PasswordConfigService {
     private struct Config {
         static let configCacheKey = "cache.config"
         static let masterKeyCachekey = "master.key"
+        static let canSaveMasterKeyCachekey = "can.save.master.key"
     }
     
     

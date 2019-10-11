@@ -10,10 +10,10 @@ import Foundation
 import CryptoSwift
 
 public struct PasswordConfig: Codable {
-    public let characterType: Set<PasswordCharacterType>
-    public let style: PasswordStyle
-    public let cryptorType: PasswordCryptorType
-    public let length: Int
+    public var characterType: Set<PasswordCharacterType>
+    public var style: PasswordStyle
+    public var cryptorType: PasswordCryptorType
+    public var length: Int
     
     public init(characterType: Set<PasswordCharacterType>,
          style: PasswordStyle,
@@ -46,7 +46,7 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
     private static let symbolsSet = Set(symbolsList)
     case symbols = 3
     
-    var characterarList: [Character] {
+    public var characterarList: [Character] {
         switch self {
         case .digits:
             return PasswordCharacterType.digitsList
@@ -72,6 +72,18 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
         }
     }
 
+    public var title: String {
+        switch self {
+        case .digits:
+            return "digits"
+        case .lowercaseLetters:
+            return "lowercaseLetters"
+        case .uppercaseLetters:
+            return "uppercaseLetters"
+        case .symbols:
+            return "symbols"
+        }
+    }
     
     
     public static func build(_ char: Character) -> PasswordCharacterType? {
@@ -96,13 +108,13 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
 
 public enum PasswordStyle: Hashable, Codable {
     
-    public enum Separator: String, Hashable, Codable {
+    public enum Separator: String, Hashable, Codable, CaseIterable {
         case hyphen
         case period
         case comma
         case underscore
         
-        var char: String {
+        public var char: String {
             switch self {
             case .hyphen: return "-"
             case .period: return ","
