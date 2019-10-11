@@ -6,7 +6,6 @@ target 'PasswordX' do
   pod 'RxSwift'
   pod 'RxRelay'
   pod 'SnapKit'
-  pod 'SVProgressHUD'
   pod 'IQKeyboardManagerSwift'
 end
 

@@ -15,6 +15,8 @@ import PasswordCryptor
 
 class GeneratorViewController: UIViewController {
     
+    private let headerContainer = UIView()
+
     private let passwordTextField = UITextField()
     private let passwordCopyButton = UIButton(type: .custom)
     
@@ -38,7 +40,6 @@ class GeneratorViewController: UIViewController {
                 
         view.backgroundColor = UIColor.white
         
-        let headerContainer = UIView()
         headerContainer.backgroundColor = UIColor(red: 0.24, green: 0.31, blue: 0.45, alpha: 1.00)
         view.addSubview(headerContainer)
         
@@ -49,6 +50,7 @@ class GeneratorViewController: UIViewController {
             passwordTextField.minimumFontSize = 0
             passwordTextField.adjustsFontSizeToFitWidth = true
             passwordTextField.placeholder = "PasswordX"
+            passwordTextField.isUserInteractionEnabled = false
             headerContainer.addSubview(passwordTextField)
             
             
@@ -107,7 +109,7 @@ class GeneratorViewController: UIViewController {
             masterHiddenButton.setImage(UIImage(named: "visibility_on"), for: .normal)
             masterHiddenButton.setImage(UIImage(named: "visibility_off"), for: .selected)
             masterHiddenButton.isSelected = true
-            masterHiddenButton.frame = CGRect(x: 0, y: 0, width: 60, height: 54)
+            masterHiddenButton.frame = CGRect(x: 0, y: 0, width: 54, height: 54)
             
             let masterHiddenButtonContainer = UIView(frame: masterHiddenButton.frame)
             masterHiddenButtonContainer.addSubview(masterHiddenButton)
@@ -187,7 +189,6 @@ class GeneratorViewController: UIViewController {
         Observable.combineLatest(masterKey, identity, config, resultSelector: { (key: $0, id: $1, config: $2) })
             .throttle(RxTimeInterval.microseconds(500), scheduler: MainScheduler.asyncInstance)
             .map { (key, id, config) -> String in
-                // TODO:  read config
                 let cryptor = PasswordCryptorService.buildCryptor(type: .AES256)
                 let pwd = try? cryptor.encrypt(masterKey: key, identity: id, config: config)
                 return pwd ?? ""
@@ -198,7 +199,11 @@ class GeneratorViewController: UIViewController {
                 
         passwordCopyButton.rx.tap.asObservable()
             .subscribe(onNext: {[weak self] _ in
-                UIPasteboard.general.string = self?.passwordTextField.text ?? ""
+                guard let self = self else {
+                    return
+                }
+                UIPasteboard.general.string = self.passwordTextField.text ?? ""
+                TextHUG.show(text: "Copied!", in: self.headerContainer)
             })
             .disposed(by: disposeBag)
         

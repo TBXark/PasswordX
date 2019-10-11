@@ -8,7 +8,6 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
   - SnapKit (5.0.0)
-  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - CryptoSwift
@@ -17,7 +16,6 @@ DEPENDENCIES:
   - RxRelay
   - RxSwift
   - SnapKit
-  - SVProgressHUD
 
 SPEC REPOS:
   https://cdn.cocoapods.org/:
@@ -25,7 +23,6 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - RxCocoa
     - SnapKit
-    - SVProgressHUD
   https://github.com/CocoaPods/Specs.git:
     - RxRelay
     - RxSwift
@@ -37,8 +34,7 @@ SPEC CHECKSUMS:
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
-  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 31c6c5e4962e6d119e7fa488e25baeaa4593caaa
+PODFILE CHECKSUM: 64eb37a1211d7fa008880c1d327f9bd96e6d7300
 
 COCOAPODS: 1.8.3
