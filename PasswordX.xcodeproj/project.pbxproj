@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,8 +24,14 @@
 		6AF2969E23502BB3003D91FA /* QuickButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF2969D23502BB3003D91FA /* QuickButton.swift */; };
 		6AF296A023504E3A003D91FA /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF2969F23504E3A003D91FA /* SliderTableViewCell.swift */; };
 		6AF296A2235056B4003D91FA /* UIKit+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF296A1235056B4003D91FA /* UIKit+Extension.swift */; };
-		7D8F8940787363D48F939B17 /* Pods_PasswordX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E5528C3C1FF4B52FCEFCD8 /* Pods_PasswordX.framework */; };
-		817D341E1EB4B276D1CDC379 /* Pods_PasswordCryptor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FFA52D795D6BCFEAACFDA0B /* Pods_PasswordCryptor.framework */; };
+		6AF296CF23506833003D91FA /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF296CE23506833003D91FA /* AuthenticationServices.framework */; };
+		6AF296D523506850003D91FA /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF296CE23506833003D91FA /* AuthenticationServices.framework */; };
+		6AF296D823506850003D91FA /* CredentialProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF296D723506850003D91FA /* CredentialProviderViewController.swift */; };
+		6AF296DB23506850003D91FA /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AF296D923506850003D91FA /* MainInterface.storyboard */; };
+		6AF296E023506850003D91FA /* PasswordXAuth.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6AF296D423506850003D91FA /* PasswordXAuth.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6AF296E7235078C8003D91FA /* BuildFile in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 6AF296E6235078C8003D91FA /* SwiftPackageProductDependency */; };
+		6AF296ED23507A15003D91FA /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF296EC23507A15003D91FA /* SwiftPackageProductDependency */; };
+		6AF296F023507C74003D91FA /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF296EF23507C74003D91FA /* SwiftPackageProductDependency */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +41,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6AB3D736234EFEAC008649C9;
 			remoteInfo = PasswordCryptor;
+		};
+		6AF296DE23506850003D91FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6AB3D713234EFE7F008649C9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6AF296D323506850003D91FA;
+			remoteInfo = PasswordXAuth;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -50,14 +63,20 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6AF296E423506850003D91FA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6AF296E023506850003D91FA /* PasswordXAuth.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		281B7C95CD61C40DA35266DF /* Pods-PasswordX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordX.release.xcconfig"; path = "Target Support Files/Pods-PasswordX/Pods-PasswordX.release.xcconfig"; sourceTree = "<group>"; };
-		28E8C3084B189339A345D19C /* Pods-PasswordCryptor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordCryptor.debug.xcconfig"; path = "Target Support Files/Pods-PasswordCryptor/Pods-PasswordCryptor.debug.xcconfig"; sourceTree = "<group>"; };
-		3001022C8DFAE6F37271ABDB /* Pods_PasswordXCLI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PasswordXCLI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3380CEF5625E7DF8A9D12512 /* Pods-PasswordX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordX.debug.xcconfig"; path = "Target Support Files/Pods-PasswordX/Pods-PasswordX.debug.xcconfig"; sourceTree = "<group>"; };
-		53B6C2BC94BD3AF76751754D /* Pods-PasswordXCLI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordXCLI.debug.xcconfig"; path = "Target Support Files/Pods-PasswordXCLI/Pods-PasswordXCLI.debug.xcconfig"; sourceTree = "<group>"; };
 		6AB3D71B234EFE7F008649C9 /* PasswordX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasswordX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AB3D71E234EFE7F008649C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AB3D720234EFE7F008649C9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,10 +97,12 @@
 		6AF2969D23502BB3003D91FA /* QuickButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickButton.swift; sourceTree = "<group>"; };
 		6AF2969F23504E3A003D91FA /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
 		6AF296A1235056B4003D91FA /* UIKit+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extension.swift"; sourceTree = "<group>"; };
-		788F8FFC560B86B35525AAD5 /* Pods-PasswordCryptor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordCryptor.release.xcconfig"; path = "Target Support Files/Pods-PasswordCryptor/Pods-PasswordCryptor.release.xcconfig"; sourceTree = "<group>"; };
-		8FFA52D795D6BCFEAACFDA0B /* Pods_PasswordCryptor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PasswordCryptor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C3A5A9991160AD8AFF6940CF /* Pods-PasswordXCLI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordXCLI.release.xcconfig"; path = "Target Support Files/Pods-PasswordXCLI/Pods-PasswordXCLI.release.xcconfig"; sourceTree = "<group>"; };
-		E0E5528C3C1FF4B52FCEFCD8 /* Pods_PasswordX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PasswordX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AF296CE23506833003D91FA /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		6AF296D423506850003D91FA /* PasswordXAuth.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PasswordXAuth.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AF296D723506850003D91FA /* CredentialProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderViewController.swift; sourceTree = "<group>"; };
+		6AF296DA23506850003D91FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		6AF296DC23506850003D91FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6AF296DD23506850003D91FA /* PasswordXAuth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PasswordXAuth.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,8 +110,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AF296CF23506833003D91FA /* AuthenticationServices.framework in Frameworks */,
+				6AF296E7235078C8003D91FA /* BuildFile in Frameworks */,
 				6AB3D73E234EFEAC008649C9 /* PasswordCryptor.framework in Frameworks */,
-				7D8F8940787363D48F939B17 /* Pods_PasswordX.framework in Frameworks */,
+				6AF296ED23507A15003D91FA /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +121,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				817D341E1EB4B276D1CDC379 /* Pods_PasswordCryptor.framework in Frameworks */,
+				6AF296F023507C74003D91FA /* BuildFile in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6AF296D123506850003D91FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AF296D523506850003D91FA /* AuthenticationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,12 +139,6 @@
 		5619CEEF541D95E04F95820B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				28E8C3084B189339A345D19C /* Pods-PasswordCryptor.debug.xcconfig */,
-				788F8FFC560B86B35525AAD5 /* Pods-PasswordCryptor.release.xcconfig */,
-				3380CEF5625E7DF8A9D12512 /* Pods-PasswordX.debug.xcconfig */,
-				281B7C95CD61C40DA35266DF /* Pods-PasswordX.release.xcconfig */,
-				53B6C2BC94BD3AF76751754D /* Pods-PasswordXCLI.debug.xcconfig */,
-				C3A5A9991160AD8AFF6940CF /* Pods-PasswordXCLI.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -123,6 +148,7 @@
 			children = (
 				6AB3D71D234EFE7F008649C9 /* PasswordX */,
 				6AB3D738234EFEAC008649C9 /* PasswordCryptor */,
+				6AF296D623506850003D91FA /* PasswordXAuth */,
 				6AB3D71C234EFE7F008649C9 /* Products */,
 				5619CEEF541D95E04F95820B /* Pods */,
 				889C92A258EDE950F43B3326 /* Frameworks */,
@@ -134,6 +160,7 @@
 			children = (
 				6AB3D71B234EFE7F008649C9 /* PasswordX.app */,
 				6AB3D737234EFEAC008649C9 /* PasswordCryptor.framework */,
+				6AF296D423506850003D91FA /* PasswordXAuth.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,12 +237,21 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		6AF296D623506850003D91FA /* PasswordXAuth */ = {
+			isa = PBXGroup;
+			children = (
+				6AF296D723506850003D91FA /* CredentialProviderViewController.swift */,
+				6AF296D923506850003D91FA /* MainInterface.storyboard */,
+				6AF296DC23506850003D91FA /* Info.plist */,
+				6AF296DD23506850003D91FA /* PasswordXAuth.entitlements */,
+			);
+			path = PasswordXAuth;
+			sourceTree = "<group>";
+		};
 		889C92A258EDE950F43B3326 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8FFA52D795D6BCFEAACFDA0B /* Pods_PasswordCryptor.framework */,
-				E0E5528C3C1FF4B52FCEFCD8 /* Pods_PasswordX.framework */,
-				3001022C8DFAE6F37271ABDB /* Pods_PasswordXCLI.framework */,
+				6AF296CE23506833003D91FA /* AuthenticationServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -238,19 +274,23 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6AB3D72F234EFE81008649C9 /* Build configuration list for PBXNativeTarget "PasswordX" */;
 			buildPhases = (
-				0938E3151AE27C2A4C642F90 /* [CP] Check Pods Manifest.lock */,
 				6AB3D717234EFE7F008649C9 /* Sources */,
 				6AB3D718234EFE7F008649C9 /* Frameworks */,
 				6AB3D719234EFE7F008649C9 /* Resources */,
 				6AB3D743234EFEAC008649C9 /* Embed Frameworks */,
-				31E5639FBA117C9A5F1356E4 /* [CP] Embed Pods Frameworks */,
+				6AF296E423506850003D91FA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				6AB3D73D234EFEAC008649C9 /* PBXTargetDependency */,
+				6AF296DF23506850003D91FA /* PBXTargetDependency */,
 			);
 			name = PasswordX;
+			packageProductDependencies = (
+				6AF296E6235078C8003D91FA /* SwiftPackageProductDependency */,
+				6AF296EC23507A15003D91FA /* SwiftPackageProductDependency */,
+			);
 			productName = PasswordX;
 			productReference = 6AB3D71B234EFE7F008649C9 /* PasswordX.app */;
 			productType = "com.apple.product-type.application";
@@ -259,7 +299,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6AB3D740234EFEAC008649C9 /* Build configuration list for PBXNativeTarget "PasswordCryptor" */;
 			buildPhases = (
-				6BF743F8D9C944CA6DC7CAD8 /* [CP] Check Pods Manifest.lock */,
 				6AB3D732234EFEAC008649C9 /* Headers */,
 				6AB3D733234EFEAC008649C9 /* Sources */,
 				6AB3D734234EFEAC008649C9 /* Frameworks */,
@@ -270,9 +309,29 @@
 			dependencies = (
 			);
 			name = PasswordCryptor;
+			packageProductDependencies = (
+				6AF296EF23507C74003D91FA /* SwiftPackageProductDependency */,
+			);
 			productName = PasswordCryptor;
 			productReference = 6AB3D737234EFEAC008649C9 /* PasswordCryptor.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		6AF296D323506850003D91FA /* PasswordXAuth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6AF296E123506850003D91FA /* Build configuration list for PBXNativeTarget "PasswordXAuth" */;
+			buildPhases = (
+				6AF296D023506850003D91FA /* Sources */,
+				6AF296D123506850003D91FA /* Frameworks */,
+				6AF296D223506850003D91FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PasswordXAuth;
+			productName = PasswordXAuth;
+			productReference = 6AF296D423506850003D91FA /* PasswordXAuth.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -291,6 +350,9 @@
 						CreatedOnToolsVersion = 11.1;
 						LastSwiftMigration = 1110;
 					};
+					6AF296D323506850003D91FA = {
+						CreatedOnToolsVersion = 11.1;
+					};
 				};
 			};
 			buildConfigurationList = 6AB3D716234EFE7F008649C9 /* Build configuration list for PBXProject "PasswordX" */;
@@ -302,12 +364,18 @@
 				Base,
 			);
 			mainGroup = 6AB3D712234EFE7F008649C9;
+			packageReferences = (
+				6AF296E5235078C8003D91FA /* RemoteSwiftPackageReference */,
+				6AF296EB23507A15003D91FA /* RemoteSwiftPackageReference */,
+				6AF296EE23507C74003D91FA /* RemoteSwiftPackageReference */,
+			);
 			productRefGroup = 6AB3D71C234EFE7F008649C9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				6AB3D71A234EFE7F008649C9 /* PasswordX */,
 				6AB3D736234EFEAC008649C9 /* PasswordCryptor */,
+				6AF296D323506850003D91FA /* PasswordXAuth */,
 			);
 		};
 /* End PBXProject section */
@@ -329,71 +397,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6AF296D223506850003D91FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AF296DB23506850003D91FA /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0938E3151AE27C2A4C642F90 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PasswordX-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		31E5639FBA117C9A5F1356E4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PasswordX/Pods-PasswordX-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PasswordX/Pods-PasswordX-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PasswordX/Pods-PasswordX-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6BF743F8D9C944CA6DC7CAD8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PasswordCryptor-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6AB3D717234EFE7F008649C9 /* Sources */ = {
@@ -422,6 +434,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6AF296D023506850003D91FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AF296D823506850003D91FA /* CredentialProviderViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -429,6 +449,12 @@
 			isa = PBXTargetDependency;
 			target = 6AB3D736234EFEAC008649C9 /* PasswordCryptor */;
 			targetProxy = 6AB3D73C234EFEAC008649C9 /* PBXContainerItemProxy */;
+		};
+		6AF296DF23506850003D91FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 6AF296D323506850003D91FA /* PasswordXAuth */;
+			targetProxy = 6AF296DE23506850003D91FA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -439,6 +465,14 @@
 				6AB3D72A234EFE81008649C9 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		6AF296D923506850003D91FA /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6AF296DA23506850003D91FA /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -560,7 +594,6 @@
 		};
 		6AB3D730234EFE81008649C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3380CEF5625E7DF8A9D12512 /* Pods-PasswordX.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -584,7 +617,6 @@
 		};
 		6AB3D731234EFE81008649C9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 281B7C95CD61C40DA35266DF /* Pods-PasswordX.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -608,7 +640,6 @@
 		};
 		6AB3D741234EFEAC008649C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28E8C3084B189339A345D19C /* Pods-PasswordCryptor.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -639,7 +670,6 @@
 		};
 		6AB3D742234EFEAC008649C9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 788F8FFC560B86B35525AAD5 /* Pods-PasswordCryptor.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -664,6 +694,46 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6AF296E223506850003D91FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PasswordXAuth/PasswordXAuth.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 858CBVXSWP;
+				INFOPLIST_FILE = PasswordXAuth/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tbxark.PasswordX.PasswordXAuth;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6AF296E323506850003D91FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PasswordXAuth/PasswordXAuth.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 858CBVXSWP;
+				INFOPLIST_FILE = PasswordXAuth/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tbxark.PasswordX.PasswordXAuth;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -697,7 +767,61 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		6AF296E123506850003D91FA /* Build configuration list for PBXNativeTarget "PasswordXAuth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6AF296E223506850003D91FA /* Debug */,
+				6AF296E323506850003D91FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6AF296E5235078C8003D91FA /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.1;
+			};
+		};
+		6AF296EB23507A15003D91FA /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		6AF296EE23507C74003D91FA /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AF296E6235078C8003D91FA /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AF296E5235078C8003D91FA /* RemoteSwiftPackageReference */;
+			productName = IQKeyboardManagerSwift;
+		};
+		6AF296EC23507A15003D91FA /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AF296EB23507A15003D91FA /* RemoteSwiftPackageReference */;
+			productName = SnapKit;
+		};
+		6AF296EF23507C74003D91FA /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AF296EE23507C74003D91FA /* RemoteSwiftPackageReference */;
+			productName = CryptoSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6AB3D713234EFE7F008649C9 /* Project object */;
 }

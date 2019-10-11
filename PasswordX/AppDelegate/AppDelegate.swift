@@ -7,7 +7,11 @@
 //
 
 import UIKit
+#if targetEnvironment(macCatalyst)
+
+#else
 import IQKeyboardManagerSwift
+#endif
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,8 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        #if targetEnvironment(macCatalyst)
+        #else
         IQKeyboardManager.shared.enable = true
+        #endif
         return true
     }
 
