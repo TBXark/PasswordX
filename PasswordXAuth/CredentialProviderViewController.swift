@@ -46,7 +46,17 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
     }
     
     override func prepareCredentialList(for serviceIdentifiers: [ASCredentialServiceIdentifier]) {
-        if let id = serviceIdentifiers.first?.identifier {
+        let host = serviceIdentifiers.compactMap { (id) -> String? in
+            switch id.type {
+            case .domain:
+                return id.identifier
+            case .URL:
+                return URLComponents(string: id.identifier)?.host
+            @unknown default:
+                return id.identifier
+            }
+        }.first
+        if let id = host {
             identityTextField.text = id
             identityTextField.sendActions(for: .valueChanged)
         }
