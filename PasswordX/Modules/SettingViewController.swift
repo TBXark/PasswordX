@@ -138,7 +138,7 @@ extension SettingViewController: UITableViewDelegate {
             } else {
                 let json = (try? JSONEncoder().encode(config))?.base64EncodedString() ?? ""
                 UIPasteboard.general.string = json
-                UIAlertController.show(title: "Warning", message: "The configuration information has been saved on the clipboard, please keep it in a safe place.", in: self)
+                UIAlertController.show(title: "Success", message: "The configuration information has been saved on the clipboard, please keep it in a safe place.", in: self)
             }
         case .restoreConfig:
             if let text = UIPasteboard.general.string,
