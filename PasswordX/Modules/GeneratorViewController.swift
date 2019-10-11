@@ -19,7 +19,9 @@ class GeneratorViewController: UIViewController {
     private let passwordCopyButton = QuickButton()
     
 
+    
     private let identityTextField = UITextField()
+    private let identityHistoryButton = QuickButton()
     private let masterKeyTextField = UITextField()
     private let masterHiddenButton = QuickButton()
 
@@ -98,8 +100,25 @@ class GeneratorViewController: UIViewController {
                 
         do {
             
+            func containerBuilder(rect: CGRect, content: UIView?) -> UIView {
+                let container = UIView(frame: rect)
+                content?.frame = rect
+                if let c = content {
+                    container.addSubview(c)
+                }
+                return container
+            }
             
+            let tfViewRect = CGRect(x: 0, y: 0, width: 54, height: 54)
+            
+            identityHistoryButton.setImage(UIImage(named: "history"), for: .normal)
+            identityTextField.rightView = containerBuilder(rect: tfViewRect, content: identityHistoryButton)
+            identityTextField.rightViewMode = .always
+            identityTextField.leftView = containerBuilder(rect: tfViewRect, content: nil)
+            identityTextField.leftViewMode = .always
             identityTextField.placeholder = "Password identity"
+            
+            
             masterKeyTextField.placeholder = "Master key"
             masterKeyTextField.isSecureTextEntry = true
             masterKeyTextField.keyboardType = .asciiCapable
@@ -108,16 +127,11 @@ class GeneratorViewController: UIViewController {
             masterHiddenButton.setImage(UIImage(named: "visibility_on"), for: .normal)
             masterHiddenButton.setImage(UIImage(named: "visibility_off"), for: .selected)
             masterHiddenButton.isSelected = true
-            masterHiddenButton.frame = CGRect(x: 0, y: 0, width: 54, height: 54)
+            masterHiddenButton.frame = tfViewRect
             
-            let masterHiddenButtonContainer = UIView(frame: masterHiddenButton.frame)
-            masterHiddenButtonContainer.addSubview(masterHiddenButton)
-            
-            let masterKeyTextFieldLeftSpace = UIView(frame: masterHiddenButton.frame)
-            
-            masterKeyTextField.rightView = masterHiddenButtonContainer
+            masterKeyTextField.rightView = containerBuilder(rect: tfViewRect, content: masterHiddenButton)
             masterKeyTextField.rightViewMode = .always
-            masterKeyTextField.leftView = masterKeyTextFieldLeftSpace
+            masterKeyTextField.leftView = containerBuilder(rect: tfViewRect, content: nil)
             masterKeyTextField.leftViewMode = .always
 
 
@@ -127,6 +141,8 @@ class GeneratorViewController: UIViewController {
                 tf.textAlignment = .center
                 tf.font = UIFont.boldSystemFont(ofSize: 16)
                 tf.textColor = UIColor.darkGray
+                tf.textContentType = .none
+                
                 view.addSubview(tf)
                 
                 let label = UILabel()
@@ -201,6 +217,9 @@ class GeneratorViewController: UIViewController {
                 }, in: self)
             } else {
                 UIPasteboard.general.string = self.passwordTextField.text ?? ""
+                if let id = self.identityTextField.text {
+                    PasswordConfigService.shared.addIdentity(id: id)
+                }
                 TextHUG.show(text: "Copied!", in: self.headerContainer)
             }
         }
@@ -217,6 +236,19 @@ class GeneratorViewController: UIViewController {
             let nav = UINavigationController(rootViewController: SettingViewController())
             self?.present(nav, animated: true, completion: nil)
         }
+        
+        identityHistoryButton.clickAction = {[weak self] _ in
+            guard let self = self else {
+                return
+            }
+            let vc = HistoryViewController()
+            vc.didSelectId = {[weak self] id in
+                self?.identityTextField.text = id
+                self?.identityTextField.sendActions(for: .valueChanged)
+            }
+            let nav = UINavigationController(rootViewController: vc)
+            self.present(nav, animated: true, completion: nil)
+        }
 
     }
     
@@ -226,7 +258,8 @@ class GeneratorViewController: UIViewController {
         let key = masterKeyTextField.text ?? ""
         let id = identityTextField.text ?? ""
         let pwd = (try? cryptor.encrypt(masterKey: key, identity: id, config: config)) ?? ""
-        if PasswordConfigService.shared.canSaveMasterKey {
+        if PasswordConfigService.shared.canSaveMasterKey,
+            key != PasswordConfigService.shared.masterKey {
             PasswordConfigService.shared.masterKey = key
         }
         passwordTextField.attributedText = PasswordTextRender.render(font: UIFont.boldSystemFont(ofSize: 18), password: pwd)

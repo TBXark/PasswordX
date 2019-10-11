@@ -52,9 +52,7 @@ class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         layoutViewController()
-        bindObserver()
         bindTargetAction()
         
         
@@ -85,10 +83,6 @@ class SettingViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
             try? PasswordConfigService.shared.update(config: self.config)
         })
-    }
-    
-    private func bindObserver() {
-        
     }
     
     private func  bindTargetAction() {

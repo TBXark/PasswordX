@@ -15,10 +15,12 @@ class PasswordConfigService {
     private struct Config {
         static let configCacheKey = "cache.config"
         static let masterKeyCachekey = "master.key"
+        static let identityHistoryKey = "identity.history.key"
         static let canSaveMasterKeyCachekey = "can.save.master.key"
     }
     
     private(set) var configValue: PasswordConfig
+    
     var canSaveMasterKey: Bool {
         didSet {
             if !canSaveMasterKey {
@@ -27,6 +29,7 @@ class PasswordConfigService {
             UserDefaults.standard.set(canSaveMasterKey, forKey: Config.canSaveMasterKeyCachekey)
         }
     }
+   
     var masterKey: String? {
         didSet {
             guard canSaveMasterKey else {
@@ -35,6 +38,13 @@ class PasswordConfigService {
             UserDefaults.standard.set(masterKey, forKey: Config.masterKeyCachekey)
         }
     }
+    
+    private(set) var identityHistory: [String] = UserDefaults.standard.stringArray(forKey: Config.identityHistoryKey) ?? [] {
+        didSet {
+            UserDefaults.standard.set(identityHistory, forKey: Config.identityHistoryKey)
+        }
+    }
+    
     private var configChangeNotitfication: NSNotification.Name {
         return NSNotification.Name("PasswordConfigService.configChange")
     }
@@ -73,6 +83,19 @@ class PasswordConfigService {
             }
             configChange?(self.configValue)
         }
+    }
+    
+    func addIdentity(id: String) {
+        var temp = identityHistory
+        if  temp.contains(id) {
+            temp.removeAll(where: { $0 == id})
+        }
+        temp.insert(id, at: 0)
+        identityHistory = temp
+    }
+    
+    func removeIdentity(id: String) {
+        identityHistory = identityHistory.filter({ $0 != id })
     }
     
 }
