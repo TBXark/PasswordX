@@ -67,7 +67,10 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
         guard editingStyle == .delete else {
             return
         }
+        tableView.beginUpdates()
         PasswordConfigService.shared.removeIdentity(id: dataSource.remove(at: indexPath.row))
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
