@@ -243,8 +243,14 @@ class GeneratorViewController: UIViewController {
             }
             let vc = HistoryViewController()
             vc.didSelectId = {[weak self] id in
-                self?.identityTextField.text = id
-                self?.identityTextField.sendActions(for: .valueChanged)
+                guard let self = self else {
+                    return
+                }
+                self.identityTextField.text = id
+                self.identityTextField.sendActions(for: .valueChanged)
+                if !(self.masterKeyTextField.text?.isEmpty ?? true) {
+                    self.passwordCopyButton.sendActions(for: .touchUpInside)
+                }
             }
             let nav = UINavigationController(rootViewController: vc)
             self.present(nav, animated: true, completion: nil)
