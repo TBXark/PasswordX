@@ -6,8 +6,6 @@
 //  Copyright © 2019 TBXark. All rights reserved.
 //
 
-import RxSwift
-import RxRelay
 import PasswordCryptor
 
 class PasswordConfigService {
@@ -21,12 +19,32 @@ class PasswordConfigService {
     }
     
     private(set) var configValue: PasswordConfig
+    var canSaveMasterKey: Bool {
+        didSet {
+            if !canSaveMasterKey {
+                masterKey = nil
+            }
+            UserDefaults.standard.set(canSaveMasterKey, forKey: Config.canSaveMasterKeyCachekey)
+        }
+    }
+    var masterKey: String? {
+        didSet {
+            guard canSaveMasterKey else {
+                return
+            }
+            UserDefaults.standard.set(masterKey, forKey: Config.masterKeyCachekey)
+        }
+    }
     private var configChangeNotitfication: NSNotification.Name {
         return NSNotification.Name("PasswordConfigService.configChange")
     }
     
     
     private init() {
+        let canSave = UserDefaults.standard.bool(forKey: Config.canSaveMasterKeyCachekey)
+        let key = canSave ? UserDefaults.standard.string(forKey: Config.masterKeyCachekey) : nil
+        self.canSaveMasterKey = canSave
+        self.masterKey = key
         if let json =  UserDefaults.standard.data(forKey: Config.configCacheKey),
             let model = try? JSONDecoder().decode(PasswordConfig.self, from: json) {
             self.configValue = model

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 import PasswordCryptor
 
 class SettingViewController: UIViewController {
@@ -45,7 +46,7 @@ class SettingViewController: UIViewController {
         
     }
     
-    private let dataSource = [Section.length, Section.characterType, Section.style, Section.cryptorType]
+    private let dataSource = [Section.length, Section.characterType, Section.style, Section.cryptorType, Section.saveMasterKey, Section.saveConfig, Section.restoreConfig, Section.about]
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private var config = PasswordConfigService.shared.configValue
     
@@ -125,13 +126,45 @@ extension SettingViewController: UITableViewDelegate {
         case .length:
             break
         case .saveMasterKey:
-            break
+            PasswordConfigService.shared.canSaveMasterKey = indexPath.row == 0
+            try? PasswordConfigService.shared.update(config: PasswordConfigService.shared.configValue)
+            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
         case .saveConfig:
-            break
+            if config != PasswordConfigService.shared.configValue {
+                let alert = UIAlertController(title: "Warning", message: "The current configuration is different from the saved configuration. If you save it, export the configuration.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Save", style: .default, handler: {[weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    try? PasswordConfigService.shared.update(config: self.config)
+                    self.tableView(tableView, didSelectRowAt: indexPath)
+                }))
+                alert.addAction(UIAlertAction.init(title: "Don't Save", style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
+            } else {
+                let json = (try? JSONEncoder().encode(config))?.base64EncodedString() ?? ""
+                UIPasteboard.general.string = json
+                UIAlertController.show(title: "Warning", message: "The configuration information has been saved on the clipboard, please keep it in a safe place.", in: self)
+            }
         case .restoreConfig:
-            break
+            if let text = UIPasteboard.general.string,
+                let data = Data(base64Encoded: text),
+                let config = try? JSONDecoder().decode(PasswordConfig.self, from: data) {
+                let alert = UIAlertController(title: "Warning", message: "Replace the current configuration with the configuration in the clipboard?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Replace", style: .destructive, handler: {[weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    self.config = config
+                    self.tableView.reloadData()
+                }))
+                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
+            } else {
+                UIAlertController.show(title: "Alert", message: "Failed to get configuration information from clipboard.", in: self)
+            }
         case .about:
-            break
+            present(SFSafariViewController(url: URL(string: "https://github.com/TBXark/PasswordX")!), animated: true, completion: nil)
         }
         
     }
@@ -247,7 +280,7 @@ extension SettingViewController: UITableViewDataSource {
                                    indexPath: indexPath,
                                    title: indexPath.row == 0 ? "Yes" : "No",
                                    subtitle: "",
-                                   isSelected: false)
+                                   isSelected: (indexPath.row == 0) == PasswordConfigService.shared.canSaveMasterKey )
         case .restoreConfig:
             return dequeueTextCell(tableView: tableView,
                                    indexPath: indexPath,
@@ -264,7 +297,7 @@ extension SettingViewController: UITableViewDataSource {
             return dequeueTextCell(tableView: tableView,
                                    indexPath: indexPath,
                                    title: "About",
-                                   subtitle: "",
+                                   subtitle: "https://github.com/TBXark/PasswordX",
                                    isSelected: false)
         }
         

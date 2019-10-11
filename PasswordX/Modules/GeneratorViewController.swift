@@ -8,8 +8,6 @@
 
 import UIKit
 import SnapKit
-import RxCocoa
-import RxSwift
 import PasswordCryptor
 
 
@@ -26,8 +24,6 @@ class GeneratorViewController: UIViewController {
     private let masterHiddenButton = QuickButton()
 
     private let settingButton = QuickButton()
-
-    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,7 +103,8 @@ class GeneratorViewController: UIViewController {
             masterKeyTextField.placeholder = "Master key"
             masterKeyTextField.isSecureTextEntry = true
             masterKeyTextField.keyboardType = .asciiCapable
-            
+            masterKeyTextField.text = PasswordConfigService.shared.canSaveMasterKey ? PasswordConfigService.shared.masterKey : nil
+
             masterHiddenButton.setImage(UIImage(named: "visibility_on"), for: .normal)
             masterHiddenButton.setImage(UIImage(named: "visibility_off"), for: .selected)
             masterHiddenButton.isSelected = true
@@ -229,6 +226,9 @@ class GeneratorViewController: UIViewController {
         let key = masterKeyTextField.text ?? ""
         let id = identityTextField.text ?? ""
         let pwd = (try? cryptor.encrypt(masterKey: key, identity: id, config: config)) ?? ""
+        if PasswordConfigService.shared.canSaveMasterKey {
+            PasswordConfigService.shared.masterKey = key
+        }
         passwordTextField.attributedText = PasswordTextRender.render(font: UIFont.boldSystemFont(ofSize: 18), password: pwd)
     }
 

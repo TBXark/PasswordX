@@ -9,7 +9,7 @@
 import Foundation
 import CryptoSwift
 
-public struct PasswordConfig: Codable {
+public struct PasswordConfig: Codable, Hashable {
     public var characterType: Set<PasswordCharacterType>
     public var style: PasswordStyle
     public var cryptorType: PasswordCryptorType
