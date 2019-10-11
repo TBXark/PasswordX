@@ -111,7 +111,7 @@
 		6AB3D747234EFEFC008649C9 /* PasswordX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PasswordX.entitlements; sourceTree = "<group>"; };
 		6AB3D748234EFF44008649C9 /* PasswordCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordCryptor.swift; sourceTree = "<group>"; };
 		6AB3D774234F193C008649C9 /* PasswordTextRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextRender.swift; sourceTree = "<group>"; };
-		6AB3D777234F3487008649C9 /* GeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneratorViewController.swift; path = PasswordX/Modules/GeneratorViewController.swift; sourceTree = SOURCE_ROOT; };
+		6AB3D777234F3487008649C9 /* GeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneratorViewController.swift; path = "PasswordX/Modules/New Group/GeneratorViewController.swift"; sourceTree = SOURCE_ROOT; };
 		6AB3D779234F356B008649C9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		6AB3D77B234F38F1008649C9 /* PasswordConfigService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordConfigService.swift; sourceTree = "<group>"; };
 		6AB3D77D234F3CE9008649C9 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -231,11 +231,7 @@
 		6AB3D746234EFEEE008649C9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				6AB3D7812350133E008649C9 /* Views */,
-				6AB3D776234F3193008649C9 /* Classes */,
-				6AB3D777234F3487008649C9 /* GeneratorViewController.swift */,
-				6AB3D779234F356B008649C9 /* SettingViewController.swift */,
-				6AB3D77D234F3CE9008649C9 /* HistoryViewController.swift */,
+				6AE3E9BB2350E15200115ACC /* Password */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -258,6 +254,18 @@
 				6AF296A1235056B4003D91FA /* UIKit+Extension.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		6AE3E9BB2350E15200115ACC /* Password */ = {
+			isa = PBXGroup;
+			children = (
+				6AB3D7812350133E008649C9 /* Views */,
+				6AB3D776234F3193008649C9 /* Classes */,
+				6AB3D777234F3487008649C9 /* GeneratorViewController.swift */,
+				6AB3D779234F356B008649C9 /* SettingViewController.swift */,
+				6AB3D77D234F3CE9008649C9 /* HistoryViewController.swift */,
+			);
+			path = Password;
 			sourceTree = "<group>";
 		};
 		6AF296D623506850003D91FA /* PasswordXAuth */ = {
