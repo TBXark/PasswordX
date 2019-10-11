@@ -20,35 +20,41 @@ class PasswordConfigService {
         static let canSaveMasterKeyCachekey = "can.save.master.key"
     }
     
-    
-    private let configStore: BehaviorRelay<PasswordConfig>
-    var configValue: PasswordConfig {
-        return configStore.value
+    private(set) var configValue: PasswordConfig
+    private var configChangeNotitfication: NSNotification.Name {
+        return NSNotification.Name("PasswordConfigService.configChange")
     }
-    let configChange: Observable<PasswordConfig>
+    
     
     private init() {
         if let json =  UserDefaults.standard.data(forKey: Config.configCacheKey),
             let model = try? JSONDecoder().decode(PasswordConfig.self, from: json) {
-            let store = BehaviorRelay<PasswordConfig>(value: model)
-            self.configStore = store
-            self.configChange = store.asObservable().share()
+            self.configValue = model
         } else {
             let defaultConfig = PasswordConfig(characterType: [.digits, .lowercaseLetters, .uppercaseLetters, .symbols],
                                                style: .word(separator: .hyphen, length: 6),
                                                cryptorType: .AES256,
                                                length: 18)
-            let store = BehaviorRelay<PasswordConfig>(value: defaultConfig)
-            self.configStore = store
-            self.configChange = store.asObservable().share()
+            self.configValue = defaultConfig
         }
     }
     
     func update(config: PasswordConfig) throws {
+        self.configValue = config
         let json = try JSONEncoder().encode(config)
         UserDefaults.standard.set(json, forKey: Config.configCacheKey)
         UserDefaults.standard.synchronize()
-        configStore.accept(config)
+        NotificationCenter.default.post(name: configChangeNotitfication, object: nil)
+    }
+    
+        
+    func addObserver(configChange: ((PasswordConfig) -> Void)? = nil) {
+        NotificationCenter.default.addObserver(forName: configChangeNotitfication, object: nil, queue: OperationQueue.main) {[weak self] _ in
+            guard let self = self else {
+                return
+            }
+            configChange?(self.configValue)
+        }
     }
     
 }

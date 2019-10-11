@@ -32,7 +32,6 @@ class GeneratorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutViewController()
-        bindObserver()
         bindTargetAction()
     }
     
@@ -180,28 +179,17 @@ class GeneratorViewController: UIViewController {
         }
     
     }
-    
-    
-    private  func bindObserver() {
-        
-        let masterKey = masterKeyTextField.rx.text.orEmpty.asObservable().share()
-        let identity = identityTextField.rx.text.orEmpty.asObservable().share()
-        let config = PasswordConfigService.shared.configChange
-        
-        Observable.combineLatest(masterKey, identity, config, resultSelector: { (key: $0, id: $1, config: $2) })
-            .throttle(RxTimeInterval.microseconds(500), scheduler: MainScheduler.asyncInstance)
-            .map { (key, id, config) -> String in
-                let cryptor = PasswordCryptorService.buildCryptor(type: .AES256)
-                let pwd = try? cryptor.encrypt(masterKey: key, identity: id, config: config)
-                return pwd ?? ""
-            }
-            .map({ PasswordTextRender.render(font: UIFont.boldSystemFont(ofSize: 18), password: $0)})
-            .bind(to: passwordTextField.rx.attributedText)
-            .disposed(by: disposeBag)
-    }
+       
     
     private func bindTargetAction() {
-                
+        
+        masterKeyTextField.addTarget(self, action: #selector(GeneratorViewController.updatePassword), for: [.allEditingEvents, .valueChanged])
+        identityTextField.addTarget(self, action: #selector(GeneratorViewController.updatePassword), for: [.allEditingEvents, .valueChanged])
+        
+        PasswordConfigService.shared.addObserver {[weak self] _ in
+            self?.updatePassword(nil)
+        }
+
         passwordCopyButton.clickAction = {[weak self] _ in
             guard let self = self else {
                 return
@@ -233,6 +221,15 @@ class GeneratorViewController: UIViewController {
             self?.present(nav, animated: true, completion: nil)
         }
 
+    }
+    
+    @objc private func updatePassword(_ sender: Any?) {
+        let config = PasswordConfigService.shared.configValue
+        let cryptor = PasswordCryptorService.buildCryptor(type: config.cryptorType)
+        let key = masterKeyTextField.text ?? ""
+        let id = identityTextField.text ?? ""
+        let pwd = (try? cryptor.encrypt(masterKey: key, identity: id, config: config)) ?? ""
+        passwordTextField.attributedText = PasswordTextRender.render(font: UIFont.boldSystemFont(ofSize: 18), password: pwd)
     }
 
 }

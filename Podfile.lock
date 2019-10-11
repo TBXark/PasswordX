@@ -1,40 +1,24 @@
 PODS:
   - CryptoSwift (1.0.0)
   - IQKeyboardManagerSwift (6.4.0)
-  - RxCocoa (5.0.0):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxRelay (5.0.0):
-    - RxSwift (~> 5)
-  - RxSwift (5.0.0)
   - SnapKit (5.0.0)
 
 DEPENDENCIES:
   - CryptoSwift
   - IQKeyboardManagerSwift
-  - RxCocoa
-  - RxRelay
-  - RxSwift
   - SnapKit
 
 SPEC REPOS:
   https://cdn.cocoapods.org/:
     - CryptoSwift
     - IQKeyboardManagerSwift
-    - RxCocoa
     - SnapKit
-  https://github.com/CocoaPods/Specs.git:
-    - RxRelay
-    - RxSwift
 
 SPEC CHECKSUMS:
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   IQKeyboardManagerSwift: ed9b04ee0e3067ffba543283462d619f944b05e5
-  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
 
-PODFILE CHECKSUM: 64eb37a1211d7fa008880c1d327f9bd96e6d7300
+PODFILE CHECKSUM: 38fb7b8dc67feb9f18d839764e20e2138c47f4ad
 
 COCOAPODS: 1.8.3
