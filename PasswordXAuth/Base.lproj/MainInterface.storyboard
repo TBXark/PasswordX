@@ -77,10 +77,6 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="handleInputValueChange:" destination="Xki-Si-B7m" eventType="editingDidEnd" id="HQm-6o-Tap"/>
-                                    <action selector="handleInputValueChange:" destination="Xki-Si-B7m" eventType="valueChanged" id="LG8-lI-Q1W"/>
-                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password identity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRm-Z2-mKp">
                                 <rect key="frame" x="50" y="164" width="275" height="21"/>
@@ -104,10 +100,6 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="handleInputValueChange:" destination="Xki-Si-B7m" eventType="valueChanged" id="Cge-r4-omn"/>
-                                    <action selector="handleInputValueChange:" destination="Xki-Si-B7m" eventType="editingDidEnd" id="pVj-nP-0Jz"/>
-                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAX-wL-kkS">
                                 <rect key="frame" x="50" y="267" width="275" height="21"/>

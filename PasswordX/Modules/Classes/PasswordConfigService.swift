@@ -36,7 +36,7 @@ class PasswordConfigService {
             UserDefaults.passwordGroup.set(canSaveMasterKey, forKey: Config.canSaveMasterKeyCachekey)
         }
     }
-   
+    
     var masterKey: String? {
         didSet {
             guard canSaveMasterKey else {
@@ -82,7 +82,7 @@ class PasswordConfigService {
         NotificationCenter.default.post(name: configChangeNotitfication, object: nil)
     }
     
-        
+    
     func addObserver(configChange: ((PasswordConfig) -> Void)? = nil) {
         NotificationCenter.default.addObserver(forName: configChangeNotitfication, object: nil, queue: OperationQueue.main) {[weak self] _ in
             guard let self = self else {
@@ -103,6 +103,14 @@ class PasswordConfigService {
     
     func removeIdentity(id: String) {
         identityHistory = identityHistory.filter({ $0 != id })
+    }
+    
+    
+    func reloadConfig() {
+        if let json =  UserDefaults.passwordGroup.data(forKey: Config.configCacheKey),
+            let model = try? JSONDecoder().decode(PasswordConfig.self, from: json) {
+            self.configValue = model
+        }
     }
     
 }

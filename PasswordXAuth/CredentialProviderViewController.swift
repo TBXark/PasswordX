@@ -18,19 +18,37 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
     @IBOutlet weak var historyTableView: UITableView!
     
     private let dataSource = PasswordConfigService.shared.identityHistory
-    private let config = PasswordConfigService.shared.configValue
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        layoutViewController()
+        bindTargetAction()
+
+    }
+    
+    func layoutViewController() {
         overrideUserInterfaceStyle = .light
+        masterKeyTextField.addTarget(self, action: #selector(CredentialProviderViewController.handleInputValueChange(_:)), for: [.allEditingEvents, .valueChanged])
+        identityTextField.addTarget(self, action: #selector(CredentialProviderViewController.handleInputValueChange(_:)), for: [.allEditingEvents, .valueChanged])
+
+    }
+    
+    func bindTargetAction() {
+        PasswordConfigService.shared.addObserver {[weak self] config in
+            self?.handleInputValueChange(nil)
+        }
+    }
+
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        PasswordConfigService.shared.reloadConfig()
     }
     
     override func prepareCredentialList(for serviceIdentifiers: [ASCredentialServiceIdentifier]) {
         if let id = serviceIdentifiers.first?.identifier {
             identityTextField.text = id
             identityTextField.sendActions(for: .valueChanged)
-            identityTextField.sendActions(for: .editingDidEnd)
-
         }
     }
 
@@ -41,10 +59,14 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
     @IBAction func handleOkButtonClick(_ sender: UIBarButtonItem) {
         let passwordCredential = ASPasswordCredential(user: "",
                                                       password: passwordTextField.text ?? "")
+        if let id = identityTextField.text {
+            PasswordConfigService.shared.addIdentity(id: id)
+        }
         self.extensionContext.completeRequest(withSelectedCredential: passwordCredential, completionHandler: nil)
     }
     
-    @IBAction func handleInputValueChange(_ sender: Any) {
+    @objc private func handleInputValueChange(_ sender: Any?) {
+        let config = PasswordConfigService.shared.configValue
         guard let key = masterKeyTextField.text,
             let id = identityTextField.text else {
             return
@@ -61,9 +83,15 @@ extension CredentialProviderViewController: UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        identityTextField.text = dataSource[indexPath.row]
+        identityTextField.sendActions(for: .valueChanged)
+    }
   
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "text") ?? UITableViewCell(style: .default, reuseIdentifier: "text")
+        cell.selectionStyle = .none
         cell.textLabel?.attributedText = NSAttributedString(string: dataSource[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         return cell
     }

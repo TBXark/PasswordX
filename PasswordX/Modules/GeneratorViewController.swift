@@ -33,6 +33,11 @@ class GeneratorViewController: UIViewController {
         bindTargetAction()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        PasswordConfigService.shared.reloadConfig()
+    }
+    
     
    private func layoutViewController() {
         
