@@ -21,6 +21,7 @@ class GeneratorViewController: UIViewController {
 
     private let identityTextField = UITextField()
     private let masterKeyTextField = UITextField()
+    private let masterHiddenButton = UIButton(type: .custom)
 
     private let disposeBag = DisposeBag()
 
@@ -100,6 +101,24 @@ class GeneratorViewController: UIViewController {
             
             identityTextField.placeholder = "Password identity"
             masterKeyTextField.placeholder = "Master key"
+            masterKeyTextField.isSecureTextEntry = true
+            masterKeyTextField.keyboardType = .asciiCapableNumberPad
+            
+            masterHiddenButton.setImage(UIImage(named: "visibility_on"), for: .normal)
+            masterHiddenButton.setImage(UIImage(named: "visibility_off"), for: .selected)
+            masterHiddenButton.isSelected = true
+            masterHiddenButton.frame = CGRect(x: 0, y: 0, width: 60, height: 54)
+            
+            let masterHiddenButtonContainer = UIView(frame: masterHiddenButton.frame)
+            masterHiddenButtonContainer.addSubview(masterHiddenButton)
+            
+            let masterKeyTextFieldLeftSpace = UIView(frame: masterHiddenButton.frame)
+            
+            masterKeyTextField.rightView = masterHiddenButtonContainer
+            masterKeyTextField.rightViewMode = .always
+            masterKeyTextField.leftView = masterKeyTextFieldLeftSpace
+            masterKeyTextField.leftViewMode = .always
+
 
             for tf in [identityTextField, masterKeyTextField] {
                 tf.layer.cornerRadius = 8
@@ -180,6 +199,16 @@ class GeneratorViewController: UIViewController {
         passwordCopyButton.rx.tap.asObservable()
             .subscribe(onNext: {[weak self] _ in
                 UIPasteboard.general.string = self?.passwordTextField.text ?? ""
+            })
+            .disposed(by: disposeBag)
+        
+        masterHiddenButton.rx.tap.asObservable()
+            .subscribe(onNext: {[weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                self.masterHiddenButton.isSelected.toggle()
+                self.masterKeyTextField.isSecureTextEntry = self.masterHiddenButton.isSelected
             })
             .disposed(by: disposeBag)
     }
