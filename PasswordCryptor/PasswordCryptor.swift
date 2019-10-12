@@ -225,7 +225,6 @@ public struct PasswordCryptorService {
         case .character:
             break
         case .word(let separator, _):
-            raw = adjustPasswordLength(password: raw, length: length)
             raw = formatPassword(password: raw, style: realPasswordStyle)
             let lastChar = raw.last
             raw = String(raw.prefix(length))
