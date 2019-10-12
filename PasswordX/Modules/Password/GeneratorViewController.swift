@@ -67,7 +67,7 @@ class GeneratorViewController: UIViewController {
             headerContainer.addSubview(passwordCopyButton)
                 
             let label = UILabel()
-            label.text = "PasswordX, Offline Strong Password Generator."
+            label.text = "PasswordX, Offline password manager."
             label.textAlignment = .center
             label.font = UIFont.boldSystemFont(ofSize: 30)
             label.numberOfLines = 0

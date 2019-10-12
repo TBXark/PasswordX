@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A7C2703235184BF009C7F8D /* GeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7C2702235184BE009C7F8D /* GeneratorViewController.swift */; };
 		6AB3D71F234EFE7F008649C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D71E234EFE7F008649C9 /* AppDelegate.swift */; };
 		6AB3D721234EFE7F008649C9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D720234EFE7F008649C9 /* SceneDelegate.swift */; };
 		6AB3D728234EFE81008649C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AB3D727234EFE81008649C9 /* Assets.xcassets */; };
@@ -16,7 +17,6 @@
 		6AB3D73F234EFEAC008649C9 /* PasswordCryptor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB3D737234EFEAC008649C9 /* PasswordCryptor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6AB3D749234EFF44008649C9 /* PasswordCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D748234EFF44008649C9 /* PasswordCryptor.swift */; };
 		6AB3D775234F193C008649C9 /* PasswordTextRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D774234F193C008649C9 /* PasswordTextRender.swift */; };
-		6AB3D778234F3487008649C9 /* GeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D777234F3487008649C9 /* GeneratorViewController.swift */; };
 		6AB3D77A234F356B008649C9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D779234F356B008649C9 /* SettingViewController.swift */; };
 		6AB3D77C234F38F1008649C9 /* PasswordConfigService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D77B234F38F1008649C9 /* PasswordConfigService.swift */; };
 		6AB3D77E234F3CE9008649C9 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D77D234F3CE9008649C9 /* HistoryViewController.swift */; };
@@ -99,6 +99,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6A7C2702235184BE009C7F8D /* GeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorViewController.swift; sourceTree = "<group>"; };
 		6AB3D71B234EFE7F008649C9 /* PasswordX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasswordX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AB3D71E234EFE7F008649C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AB3D720234EFE7F008649C9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,7 +112,6 @@
 		6AB3D747234EFEFC008649C9 /* PasswordX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PasswordX.entitlements; sourceTree = "<group>"; };
 		6AB3D748234EFF44008649C9 /* PasswordCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordCryptor.swift; sourceTree = "<group>"; };
 		6AB3D774234F193C008649C9 /* PasswordTextRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextRender.swift; sourceTree = "<group>"; };
-		6AB3D777234F3487008649C9 /* GeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneratorViewController.swift; path = "PasswordX/Modules/New Group/GeneratorViewController.swift"; sourceTree = SOURCE_ROOT; };
 		6AB3D779234F356B008649C9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		6AB3D77B234F38F1008649C9 /* PasswordConfigService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordConfigService.swift; sourceTree = "<group>"; };
 		6AB3D77D234F3CE9008649C9 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -261,9 +261,9 @@
 			children = (
 				6AB3D7812350133E008649C9 /* Views */,
 				6AB3D776234F3193008649C9 /* Classes */,
-				6AB3D777234F3487008649C9 /* GeneratorViewController.swift */,
 				6AB3D779234F356B008649C9 /* SettingViewController.swift */,
 				6AB3D77D234F3CE9008649C9 /* HistoryViewController.swift */,
+				6A7C2702235184BE009C7F8D /* GeneratorViewController.swift */,
 			);
 			path = Password;
 			sourceTree = "<group>";
@@ -453,9 +453,9 @@
 				6AB3D71F234EFE7F008649C9 /* AppDelegate.swift in Sources */,
 				6AB3D721234EFE7F008649C9 /* SceneDelegate.swift in Sources */,
 				6AF296A2235056B4003D91FA /* UIKit+Extension.swift in Sources */,
-				6AB3D778234F3487008649C9 /* GeneratorViewController.swift in Sources */,
 				6AB3D77E234F3CE9008649C9 /* HistoryViewController.swift in Sources */,
 				6AB3D775234F193C008649C9 /* PasswordTextRender.swift in Sources */,
+				6A7C2703235184BF009C7F8D /* GeneratorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
