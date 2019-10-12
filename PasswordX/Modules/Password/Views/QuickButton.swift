@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 public typealias ButtonClick = (QuickButton) -> Void
 public typealias BarButtonClick = (UIBarButtonItem) -> Void
 
@@ -112,7 +111,6 @@ open class QuickButton: UIButton {
         return customtImageRect?(contentRect) ?? super.imageRect(forContentRect: contentRect)
     }
 }
-
 
 public class QuickBarButton: UIBarButtonItem {
 

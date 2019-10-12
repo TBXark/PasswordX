@@ -16,7 +16,7 @@ struct PasswordTextRender {
         for c in password {
             let type = PasswordCharacterType.build(c)
             let string =  String(c)
-            var attributes: [NSAttributedString.Key : Any] = [.font: font]
+            var attributes: [NSAttributedString.Key: Any] = [.font: font]
             switch type {
             case .none, .symbols:
                 attributes[.foregroundColor] = UIColor(red: 0.89, green: 0.26, blue: 0.20, alpha: 1.00)

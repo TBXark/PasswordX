@@ -14,7 +14,7 @@ public struct PasswordConfig: Codable, Hashable {
     public var style: PasswordStyle
     public var cryptorType: PasswordCryptorType
     public var length: Int
-    
+
     public init(characterType: Set<PasswordCharacterType>,
          style: PasswordStyle,
          cryptorType: PasswordCryptorType,
@@ -27,7 +27,6 @@ public struct PasswordConfig: Codable, Hashable {
     }
 }
 
-
 public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
 
     private static let digitsList = "0123456789".map({ $0 })
@@ -37,15 +36,15 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
     private static let lowercaseLettersList = "abcdefghijklmnopqrstuvwxyz".map({ $0 })
     private static let lowercaseLettersSet = Set(lowercaseLettersList)
     case lowercaseLetters = 1
-    
+
     private static let uppercaseLettersList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map({ $0 })
     private static let uppercaseLettersSet = Set(uppercaseLettersList)
     case uppercaseLetters = 2
-    
+
     private static let symbolsList = "!\"#$%&'()*+/:;<=>?@[\\]^`{|}~-,._".map({ $0 })
     private static let symbolsSet = Set(symbolsList)
     case symbols = 3
-    
+
     public var characterarList: [Character] {
         switch self {
         case .digits:
@@ -58,7 +57,7 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
             return PasswordCharacterType.symbolsList
         }
     }
-    
+
     var characterarSet: Set<Character> {
         switch self {
         case .digits:
@@ -84,8 +83,7 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
             return "symbols"
         }
     }
-    
-    
+
     public static func build(_ char: Character) -> PasswordCharacterType? {
         for t in PasswordCharacterType.allCases {
             if t.characterarSet.contains(char) {
@@ -94,7 +92,7 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
         }
         return nil
     }
-    
+
     static func characterSet(from types: [PasswordCharacterType]) -> [Character] {
         var temp = [Character]()
         for t in PasswordCharacterType.allCases {
@@ -107,13 +105,13 @@ public enum PasswordCharacterType: Int, Hashable, CaseIterable, Codable {
 }
 
 public enum PasswordStyle: Hashable, Codable {
-    
+
     public enum Separator: String, Hashable, Codable, CaseIterable {
         case hyphen
         case period
         case comma
         case underscore
-        
+
         public var char: String {
             switch self {
             case .hyphen: return "-"
@@ -122,13 +120,12 @@ public enum PasswordStyle: Hashable, Codable {
             case .underscore: return "_"
             }
         }
-        
+
     }
-    
+
     case character
     case word(separator: Separator, length: Int)
-    
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawString = try container.decode(String.self)
@@ -146,7 +143,7 @@ public enum PasswordStyle: Hashable, Codable {
             }
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
@@ -156,7 +153,6 @@ public enum PasswordStyle: Hashable, Codable {
             try container.encode("word,\(separator.rawValue),\(length)")
         }
     }
-    
 
 }
 
@@ -167,7 +163,7 @@ public enum PasswordCryptorType: String, CaseIterable, Codable {
 }
 
 public struct PasswordCryptorService {
-    
+
     public static func buildCryptor(type: PasswordCryptorType) -> PasswordCryptor {
         switch type {
         case .MD5:
@@ -202,8 +198,8 @@ public struct PasswordCryptorService {
             return BlowfishPasswordCryptor()
         }
     }
-    
-    static func encrypt(rawPassword: String, passwordCharacterSet: [PasswordCharacterType], passwordStyle: PasswordStyle, length: Int) ->  String {
+
+    static func encrypt(rawPassword: String, passwordCharacterSet: [PasswordCharacterType], passwordStyle: PasswordStyle, length: Int) -> String {
         var raw = rawPassword
         guard raw.count > 0, length > 0, passwordCharacterSet.count > 0 else {
             return raw
@@ -262,7 +258,7 @@ public struct PasswordCryptorService {
                 }
                 res[t] = (res[t] ?? 0) + 1
             }
-            var mostNumerousChar: (key: PasswordCharacterType, value: Int)? = nil
+            var mostNumerousChar: (key: PasswordCharacterType, value: Int)?
             for (k, v) in charTypeCount {
                 guard let last = mostNumerousChar else {
                     mostNumerousChar = (key: k, value: v)
@@ -282,7 +278,7 @@ public struct PasswordCryptorService {
         }
         return String(outputPassword)
     }
-    
+
     private static func adjustPasswordLength(password: String, length: Int) -> String {
         guard password.count != length else {
             return password
@@ -305,7 +301,7 @@ public struct PasswordCryptorService {
         }
         return outputPassword
     }
-    
+
     private static func filterInvalidCharacter(password: String, passwordCharacterSet: [PasswordCharacterType]) -> String {
         var outputPassword = ""
         let characters = PasswordCharacterType.characterSet(from: passwordCharacterSet)
@@ -320,7 +316,7 @@ public struct PasswordCryptorService {
         }
         return outputPassword
     }
-    
+
     private static func formatPassword(password: String, style: PasswordStyle) -> String {
         switch style {
         case .character:
@@ -342,20 +338,17 @@ public struct PasswordCryptorService {
     }
 }
 
-
-
-
 public protocol PasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String
     func encrypt(masterKey: String, identity: String, passwordCharacterSet: [PasswordCharacterType], passwordStyle: PasswordStyle, length: Int) throws -> String
 }
- 
+
 public extension PasswordCryptor {
-    
-    func encrypt(masterKey: String,  identity: String, config: PasswordConfig) throws -> String {
+
+    func encrypt(masterKey: String, identity: String, config: PasswordConfig) throws -> String {
         return try encrypt(masterKey: masterKey, identity: identity, passwordCharacterSet: Array(config.characterType), passwordStyle: config.style, length: config.length)
     }
-    
+
     func encrypt(masterKey: String, identity: String, passwordCharacterSet: [PasswordCharacterType], passwordStyle: PasswordStyle, length: Int) throws -> String {
         guard !masterKey.isEmpty, !identity.isEmpty else {
             return ""
@@ -363,9 +356,8 @@ public extension PasswordCryptor {
         let raw = try generateRawPassword(masterKey: masterKey, identity: identity)
         return PasswordCryptorService.encrypt(rawPassword: raw, passwordCharacterSet: passwordCharacterSet, passwordStyle: passwordStyle, length: length)
     }
-    
-}
 
+}
 
 // MARK: - Hash (Digest)
 // MD5 | SHA1 | SHA224 | SHA256 | SHA384 | SHA512 | SHA3
@@ -391,7 +383,6 @@ private struct MD5PasswordCryptor: HashPasswordCryptor {
         return input.md5()
     }
 }
-
 
 private struct SHA1PasswordCryptor: HashPasswordCryptor {
     func hash(input: Data) -> Data {
@@ -422,7 +413,6 @@ private struct SHA512PasswordCryptor: HashPasswordCryptor {
         return input.sha512()
     }
 }
-
 
 // MARK: - Cyclic Redundancy Check (CRC)
 // CRC32 | CRC32C | CRC16
@@ -460,8 +450,6 @@ private struct Crc32cPasswordCryptor: CrcPasswordCryptor {
     }
 }
 
-
-
 // MARK: - Cipher
 // AES-128, AES-192, AES-256 | ChaCha20 | Rabbit | Blowfish
 private protocol CipherPasswordCryptor: PasswordCryptor {
@@ -474,7 +462,7 @@ extension CipherPasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String {
         var keyRaw = masterKey
         var iv = Array<UInt8>(repeating: 0, count: ivLength)
-        
+
         if let checkSum = (masterKey + identity).data(using: .utf8)?.checksum() {
             keyRaw = "\(checkSum % 99)\(keyRaw)"
             if iv.count > 0 {
@@ -484,12 +472,12 @@ extension CipherPasswordCryptor {
                 iv[1] = UInt8(checkSum >> 8)
             }
         }
-        
+
         var key = try JSONEncoder().encode(keyRaw).base64EncodedData().prefix(keyLength)
         if key.count < keyLength {
             key.append(contentsOf: Array<UInt8>(repeating: 0, count: keyLength - key.count))
         }
-        
+
         let identityData = (try JSONEncoder().encode(identity)).base64EncodedData().bytes
         let passwordData = try encrypt(key: key.bytes, iv: iv, data: identityData)
 
@@ -499,14 +487,14 @@ extension CipherPasswordCryptor {
 }
 
 private struct ChaCha20PasswordCryptor: CipherPasswordCryptor {
-   
+
     var keyLength: Int {
         return 32
     }
     var ivLength: Int {
         return 12
     }
-    
+
     func encrypt(key: [UInt8], iv: [UInt8], data: [UInt8]) throws -> [UInt8] {
         let chacha = try ChaCha20(key: key, iv: iv)
         return try chacha.encrypt( data )
@@ -514,14 +502,14 @@ private struct ChaCha20PasswordCryptor: CipherPasswordCryptor {
 }
 
 private struct RabbitPasswordCryptor: CipherPasswordCryptor {
-    
+
     var keyLength: Int {
         return Rabbit.keySize
     }
     var ivLength: Int {
         return Rabbit.ivSize
     }
-    
+
     func encrypt(key: [UInt8], iv: [UInt8], data: [UInt8]) throws -> [UInt8] {
         let rabbit = try Rabbit(key: key, iv: iv)
         return try rabbit.encrypt( data )
@@ -529,14 +517,14 @@ private struct RabbitPasswordCryptor: CipherPasswordCryptor {
 }
 
 private struct BlowfishPasswordCryptor: CipherPasswordCryptor {
-    
+
     var keyLength: Int {
         return 65
     }
     var ivLength: Int {
         return Blowfish.blockSize
     }
-    
+
     func encrypt(key: [UInt8], iv: [UInt8], data: [UInt8]) throws -> [UInt8] {
         let blowfish = try Blowfish(key: key, padding: Padding.noPadding)
         return try blowfish.encrypt( data )
@@ -551,14 +539,13 @@ private struct AES128PasswordCryptor: CipherPasswordCryptor {
     var ivLength: Int {
         return AES.blockSize
     }
-    
+
     func encrypt(key: [UInt8], iv: [UInt8], data: [UInt8]) throws -> [UInt8] {
         let aes = try AES(key: key, blockMode: CBC(iv: iv))
         return try aes.encrypt( data )
     }
 
 }
-
 
 private struct AES192PasswordCryptor: CipherPasswordCryptor {
     var keyLength: Int {
@@ -567,13 +554,12 @@ private struct AES192PasswordCryptor: CipherPasswordCryptor {
     var ivLength: Int {
         return AES.blockSize
     }
-    
+
     func encrypt(key: [UInt8], iv: [UInt8], data: [UInt8]) throws -> [UInt8] {
         let aes = try AES(key: key, blockMode: CBC(iv: iv))
         return try aes.encrypt( data )
     }
 }
-
 
 private struct AES256PasswordCryptor: CipherPasswordCryptor {
     var keyLength: Int {
@@ -582,7 +568,7 @@ private struct AES256PasswordCryptor: CipherPasswordCryptor {
     var ivLength: Int {
         return AES.blockSize
     }
-    
+
     func encrypt(key: [UInt8], iv: [UInt8], data: [UInt8]) throws -> [UInt8] {
         let aes = try AES(key: key, blockMode: CBC(iv: iv))
         return try aes.encrypt( data )

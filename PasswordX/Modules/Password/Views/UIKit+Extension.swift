@@ -12,11 +12,11 @@ extension NSAttributedString {
     convenience init(text: String, color: UIColor, font: UIFont) {
         self.init(string: text, attributes: [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: color])
     }
-    
+
     func toMutable() -> NSMutableAttributedString {
         return (self as? NSMutableAttributedString) ?? NSMutableAttributedString(attributedString: self)
     }
-    
+
     static func +(lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
         let main = NSMutableAttributedString()
         main.append(lhs)

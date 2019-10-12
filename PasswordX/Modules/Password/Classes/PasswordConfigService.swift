@@ -15,19 +15,18 @@ extension UserDefaults {
 }
 
 class PasswordConfigService {
-    
+
     static let shared = PasswordConfigService()
-    
+
     private struct Config {
         static let configCacheKey = "cache.config"
         static let masterKeyCachekey = "master.key"
         static let identityHistoryKey = "identity.history.key"
         static let canSaveMasterKeyCachekey = "can.save.master.key"
     }
-    
-    
+
     private(set) var configValue: PasswordConfig
-    
+
     var canSaveMasterKey: Bool {
         didSet {
             if !canSaveMasterKey {
@@ -36,7 +35,7 @@ class PasswordConfigService {
             UserDefaults.passwordGroup.set(canSaveMasterKey, forKey: Config.canSaveMasterKeyCachekey)
         }
     }
-    
+
     var masterKey: String? {
         didSet {
             guard canSaveMasterKey else {
@@ -45,18 +44,17 @@ class PasswordConfigService {
             UserDefaults.passwordGroup.set(masterKey, forKey: Config.masterKeyCachekey)
         }
     }
-    
+
     private(set) var identityHistory: [String] = UserDefaults.passwordGroup.stringArray(forKey: Config.identityHistoryKey) ?? [] {
         didSet {
             UserDefaults.passwordGroup.set(identityHistory, forKey: Config.identityHistoryKey)
         }
     }
-    
+
     private var configChangeNotitfication: NSNotification.Name {
         return NSNotification.Name("PasswordConfigService.configChange")
     }
-    
-    
+
     private init() {
         let canSave = UserDefaults.passwordGroup.bool(forKey: Config.canSaveMasterKeyCachekey)
         let key = canSave ? UserDefaults.passwordGroup.string(forKey: Config.masterKeyCachekey) : nil
@@ -73,7 +71,7 @@ class PasswordConfigService {
             self.configValue = defaultConfig
         }
     }
-    
+
     func update(config: PasswordConfig) throws {
         self.configValue = config
         let json = try JSONEncoder().encode(config)
@@ -81,8 +79,7 @@ class PasswordConfigService {
         UserDefaults.passwordGroup.synchronize()
         NotificationCenter.default.post(name: configChangeNotitfication, object: nil)
     }
-    
-    
+
     func addObserver(configChange: ((PasswordConfig) -> Void)? = nil) {
         NotificationCenter.default.addObserver(forName: configChangeNotitfication, object: nil, queue: OperationQueue.main) {[weak self] _ in
             guard let self = self else {
@@ -91,7 +88,7 @@ class PasswordConfigService {
             configChange?(self.configValue)
         }
     }
-    
+
     func addIdentity(id: String) {
         var temp = identityHistory
         if  temp.contains(id) {
@@ -100,17 +97,16 @@ class PasswordConfigService {
         temp.insert(id, at: 0)
         identityHistory = temp
     }
-    
+
     func removeIdentity(id: String) {
         identityHistory = identityHistory.filter({ $0 != id })
     }
-    
-    
+
     func reloadConfig() {
         if let json =  UserDefaults.passwordGroup.data(forKey: Config.configCacheKey),
             let model = try? JSONDecoder().decode(PasswordConfig.self, from: json) {
             self.configValue = model
         }
     }
-    
+
 }

@@ -11,9 +11,9 @@ import SafariServices
 import PasswordCryptor
 
 class SettingViewController: UIViewController {
-    
+
     enum Section: CaseIterable {
-        
+
         case length
         case characterType
         case style
@@ -22,7 +22,7 @@ class SettingViewController: UIViewController {
         case saveConfig
         case restoreConfig
         case about
-        
+
         var count: Int {
             switch self {
             case .characterType:
@@ -43,24 +43,29 @@ class SettingViewController: UIViewController {
                 return 1
             }
         }
-        
+
     }
-    
-    private let dataSource = [Section.length, Section.characterType, Section.style, Section.cryptorType, Section.saveMasterKey, Section.saveConfig, Section.restoreConfig, Section.about]
+
+    private let dataSource: [Section] = {
+        if BiometricAuth.isBiometricAuthenticationAvailable() {
+            return [Section.length, Section.characterType, Section.style, Section.cryptorType, Section.saveMasterKey, Section.saveConfig, Section.restoreConfig, Section.about]
+        } else {
+            return [Section.length, Section.characterType, Section.style, Section.cryptorType, Section.saveConfig, Section.restoreConfig, Section.about]
+        }
+    }()
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private var config = PasswordConfigService.shared.configValue
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutViewController()
         bindTargetAction()
-        
-        
+
     }
-    
+
     private func layoutViewController() {
         self.title = "Setting"
-        
+
         view.backgroundColor = UIColor.white
         view.addSubview(tableView)
         tableView.delegate = self
@@ -70,12 +75,11 @@ class SettingViewController: UIViewController {
         tableView.snp.makeConstraints { (make) in
             make.top.bottom.left.right.equalTo(view)
         }
-        
-        
+
         navigationItem.leftBarButtonItem = QuickBarButton.build(title: "Close", action: {[weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         })
-        
+
         navigationItem.rightBarButtonItem = QuickBarButton.build(title: "Save", action: {[weak self] _ in
             guard let self = self else {
                 return
@@ -84,16 +88,21 @@ class SettingViewController: UIViewController {
             try? PasswordConfigService.shared.update(config: self.config)
         })
     }
-    
+
     private func  bindTargetAction() {
-        
+
     }
-    
-    
+
 }
 
-
 extension SettingViewController: UITableViewDelegate {
+
+    private func reloadSaveMasterKeySection(section: Int, newValue: Bool) {
+        PasswordConfigService.shared.canSaveMasterKey = newValue
+        tableView.reloadSections(IndexSet(integer: section), with: .none)
+
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch dataSource[indexPath.section] {
         case .characterType:
@@ -120,9 +129,26 @@ extension SettingViewController: UITableViewDelegate {
         case .length:
             break
         case .saveMasterKey:
-            PasswordConfigService.shared.canSaveMasterKey = indexPath.row == 0
-            try? PasswordConfigService.shared.update(config: PasswordConfigService.shared.configValue)
-            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
+            if indexPath.row == 0, !PasswordConfigService.shared.canSaveMasterKey {
+                BiometricAuth.auth(localizedReason: "SaveMasterKey") {[weak self] (isSuccess, error) in
+                    guard let self = self else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        if isSuccess {
+                            self.reloadSaveMasterKeySection(section: indexPath.section, newValue: true)
+                        } else {
+                            let reason = error?.localizedDescription ?? "Unknow reason"
+                            UIAlertController.show(title: "Error", message: reason, in: self)
+                        }
+                    }
+                }
+
+            } else {
+                PasswordConfigService.shared.canSaveMasterKey = indexPath.row == 0
+                try? PasswordConfigService.shared.update(config: PasswordConfigService.shared.configValue)
+                tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
+            }
         case .saveConfig:
             if config != PasswordConfigService.shared.configValue {
                 let alert = UIAlertController(title: "Warning", message: "The current configuration is different from the saved configuration. If you save it, export the configuration.", preferredStyle: .alert)
@@ -160,12 +186,12 @@ extension SettingViewController: UITableViewDelegate {
         case .about:
             present(SFSafariViewController(url: URL(string: "https://github.com/TBXark/PasswordX")!), animated: true, completion: nil)
         }
-        
+
     }
 }
 
 extension SettingViewController: UITableViewDataSource {
-    
+
     private func dequeueTextCell(tableView: UITableView, indexPath: IndexPath, title: String, subtitle: String, isSelected: Bool) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "text") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "text")
         cell.selectionStyle = .none
@@ -178,7 +204,7 @@ extension SettingViewController: UITableViewDataSource {
         cell.accessoryType = isSelected ? .checkmark : .none
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch dataSource[section] {
         case .characterType:
@@ -199,11 +225,11 @@ extension SettingViewController: UITableViewDataSource {
             return "About"
         }
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let section = dataSource[section]
         switch  section {
@@ -218,7 +244,7 @@ extension SettingViewController: UITableViewDataSource {
             return section.count
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch dataSource[indexPath.section] {
         case .characterType:
@@ -235,7 +261,7 @@ extension SettingViewController: UITableViewDataSource {
                                        title: style.title,
                                        subtitle: style.example,
                                        isSelected: config.style == style)
-                
+
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "slider", for: indexPath) as! SliderTableViewCell
                 cell.configure(title: "Partten length:  ", min: 4, max: 10, value: config.style.parttenLength) {[weak self] newLength in
@@ -294,9 +320,9 @@ extension SettingViewController: UITableViewDataSource {
                                    subtitle: "https://github.com/TBXark/PasswordX",
                                    isSelected: false)
         }
-        
+
     }
-    
+
 }
 
 extension PasswordStyle {
@@ -308,7 +334,7 @@ extension PasswordStyle {
             return length
         }
     }
-    
+
     init?(index: Int, length: Int) {
         if index == 0 {
             self = .character
@@ -318,7 +344,7 @@ extension PasswordStyle {
             return nil
         }
     }
-    
+
     var example: String {
         switch self {
         case .character:
@@ -327,7 +353,7 @@ extension PasswordStyle {
             return Array<String>(repeating: Array<String>(repeating: "x", count: length).joined(), count: 3).joined(separator: separator.char)
         }
     }
-    
+
     var title: String {
         switch self {
         case .character:
@@ -336,8 +362,5 @@ extension PasswordStyle {
             return separator.rawValue
         }
     }
-    
+
 }
-
-
-
