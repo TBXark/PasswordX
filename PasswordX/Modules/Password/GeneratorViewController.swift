@@ -30,6 +30,9 @@ class GeneratorViewController: UIViewController {
     private let settingButton = QuickButton()
     private var lastRestoreMasterKeyDate: Date?
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutViewController()
@@ -59,6 +62,7 @@ class GeneratorViewController: UIViewController {
             passwordTextField.adjustsFontSizeToFitWidth = true
             passwordTextField.placeholder = "PasswordX"
             passwordTextField.delegate = self
+            passwordTextField.font = UIFont.boldSystemFont(ofSize: 16)
             headerContainer.isUserInteractionEnabled = true
             headerContainer.addSubview(passwordTextField)
 
@@ -70,9 +74,18 @@ class GeneratorViewController: UIViewController {
             headerContainer.addSubview(passwordCopyButton)
 
             let label = UILabel()
-            label.text = "PasswordX, Offline password manager."
-            label.textAlignment = .center
-            label.font = UIFont.boldSystemFont(ofSize: 30)
+            let para = NSMutableParagraphStyle()
+            para.alignment = .center
+            para.paragraphSpacing = 6
+            let attr = NSMutableAttributedString(string: "PasswordX\n",
+                                                 attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 30),
+                                                              NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                              NSAttributedString.Key.paragraphStyle: para])
+            attr.append(NSAttributedString(string: "Master key + Identity + Configuration = Unique password",
+                                           attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12),
+                                           NSAttributedString.Key.foregroundColor: UIColor.white,
+                                           NSAttributedString.Key.paragraphStyle: para]))
+            label.attributedText = attr
             label.numberOfLines = 0
             label.textColor = UIColor.white
             headerContainer.addSubview(label)
@@ -93,7 +106,7 @@ class GeneratorViewController: UIViewController {
             passwordTextField.snp.makeConstraints { (make) in
                 make.left.equalTo(headerContainer).offset(space)
                 make.right.equalTo(headerContainer).offset(-space)
-                make.top.equalTo(label.snp.bottom).offset(space)
+                make.top.equalTo(label.snp.bottom).offset(20)
                 make.height.equalTo(54)
             }
 
