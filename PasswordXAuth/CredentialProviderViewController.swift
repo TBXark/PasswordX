@@ -16,14 +16,13 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
     @IBOutlet weak var masterKeyTextField: UITextField!
     @IBOutlet weak var historyTableView: UITableView!
 
-    private let dataSource = PasswordConfigService.shared.identityHistory
+    private var dataSource = PasswordConfigService.shared.identityHistory
 
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutViewController()
         bindTargetAction()
         autoLoadMasterKeyIfNeed()
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -57,6 +56,7 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
             DispatchQueue.main.async {
                 if isSuccess {
                     self.masterKeyTextField.text = key
+                    self.masterKeyTextField.sendActions(for: .valueChanged)
                 }
             }
         }
@@ -106,6 +106,27 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
 }
 
 extension CredentialProviderViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else {
+            return
+        }
+        tableView.beginUpdates()
+        PasswordConfigService.shared.removeIdentity(id: dataSource.remove(at: indexPath.row))
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
+    }
+
+
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
