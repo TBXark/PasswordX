@@ -238,7 +238,7 @@ class GeneratorViewController: UIViewController {
             guard let self = self else {
                 return
             }
-            if let date = self.lastRestoreMasterKeyDate, (-date.timeIntervalSinceNow) > 1 {
+            if let date = self.lastRestoreMasterKeyDate, (-date.timeIntervalSinceNow) > 60 * 3 {
                 self.masterKeyTextField.text = nil
                 self.autoLoadMasterKeyIfNeed()
             }
