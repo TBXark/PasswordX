@@ -212,7 +212,7 @@ extension SettingViewController: UITableViewDataSource {
         case .style:
             return "Style"
         case .cryptorType:
-            return "Character Type"
+            return "Cryptor Type"
         case .length:
             return "Password length"
         case .saveMasterKey:

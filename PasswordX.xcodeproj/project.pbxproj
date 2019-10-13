@@ -24,7 +24,6 @@
 		6AB3D77E234F3CE9008649C9 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D77D234F3CE9008649C9 /* HistoryViewController.swift */; };
 		6AB3D7802350131E008649C9 /* TextHUG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D77F2350131E008649C9 /* TextHUG.swift */; };
 		6AE3E9B42350CE7C00115ACC /* PasswordCryptor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB3D737234EFEAC008649C9 /* PasswordCryptor.framework */; };
-		6AE3E9B52350CE7C00115ACC /* PasswordCryptor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB3D737234EFEAC008649C9 /* PasswordCryptor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6AE3E9B92350CE8900115ACC /* PasswordTextRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D774234F193C008649C9 /* PasswordTextRender.swift */; };
 		6AE3E9BA2350CE8900115ACC /* PasswordConfigService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB3D77B234F38F1008649C9 /* PasswordConfigService.swift */; };
 		6AF2969E23502BB3003D91FA /* QuickButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF2969D23502BB3003D91FA /* QuickButton.swift */; };
@@ -72,17 +71,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				6AB3D73F234EFEAC008649C9 /* PasswordCryptor.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6AE3E9B82350CE7C00115ACC /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6AE3E9B52350CE7C00115ACC /* PasswordCryptor.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,7 +346,6 @@
 				6AF296D023506850003D91FA /* Sources */,
 				6AF296D123506850003D91FA /* Frameworks */,
 				6AF296D223506850003D91FA /* Resources */,
-				6AE3E9B82350CE7C00115ACC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
