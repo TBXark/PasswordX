@@ -1,9 +1,9 @@
 # PasswordX
 > Offline password manager for iOS/Mac
 
-![Xcode 11.0+](https://img.shields.io/badge/Xcode-9.0%2B-blue.svg)
-![iOS 13.0+](https://img.shields.io/badge/iOS-8.0%2B-blue.svg)
-![Swift 5.0+](https://img.shields.io/badge/Swift-4.0%2B-orange.svg)
+![Xcode 11.0+](https://img.shields.io/badge/Xcode-11.0%2B-blue.svg)
+![iOS 13.0+](https://img.shields.io/badge/iOS-13.0%2B-blue.svg)
+![Swift 5.0+](https://img.shields.io/badge/Swift-5.0%2B-orange.svg)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/TBXark/PasswordX/master/LICENSE)
 
 ![](./Resource/AppPreview.png)
