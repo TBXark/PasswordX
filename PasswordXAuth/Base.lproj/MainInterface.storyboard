@@ -17,7 +17,7 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-kG-lGu">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <color key="barTintColor" red="0.2196390033" green="0.31055322289999998" blue="0.46412420269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.023529411764705882" green="0.5607843137254902" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
@@ -42,7 +42,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="100"/>
                                 <subviews>
                                     <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PasswordX" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9W-gh-Yl2">
-                                        <rect key="frame" x="50" y="20" width="275" height="54"/>
+                                        <rect key="frame" x="50" y="25" width="275" height="54"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="54" id="p59-Dp-rmp"/>
@@ -56,11 +56,11 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="0.33026430010000002" green="0.40917181969999999" blue="0.54620295760000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.023529411764705882" green="0.5607843137254902" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="S9W-gh-Yl2" firstAttribute="leading" secondItem="03L-D5-Sfk" secondAttribute="leading" constant="50" id="HkW-tN-Pxe"/>
                                     <constraint firstAttribute="trailing" secondItem="S9W-gh-Yl2" secondAttribute="trailing" constant="50" id="b4U-9r-kQY"/>
-                                    <constraint firstItem="S9W-gh-Yl2" firstAttribute="top" secondItem="03L-D5-Sfk" secondAttribute="top" constant="20" id="gGP-we-v6G"/>
+                                    <constraint firstItem="S9W-gh-Yl2" firstAttribute="top" secondItem="03L-D5-Sfk" secondAttribute="top" constant="25" id="gGP-we-v6G"/>
                                     <constraint firstAttribute="height" constant="100" id="hJy-30-l7O"/>
                                 </constraints>
                             </view>

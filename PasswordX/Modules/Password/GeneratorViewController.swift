@@ -51,7 +51,7 @@ class GeneratorViewController: UIViewController {
 
         view.backgroundColor = UIColor.white
 
-        headerContainer.backgroundColor = UIColor(red: 0.24, green: 0.31, blue: 0.45, alpha: 1.00)
+        headerContainer.backgroundColor = UIColor(red: 0.03, green: 0.56, blue: 0.75, alpha: 1.00)
         view.addSubview(headerContainer)
 
         do {
@@ -69,7 +69,7 @@ class GeneratorViewController: UIViewController {
             passwordCopyButton.setTitle("Copy Secure Password", for: .normal)
             passwordCopyButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
             passwordCopyButton.setTitleColor(UIColor.white, for: .normal)
-            passwordCopyButton.backgroundColor = UIColor(red: 0.32, green: 0.70, blue: 0.28, alpha: 1.00)
+            passwordCopyButton.backgroundColor = UIColor(red: 0.00, green: 0.77, blue: 0.42, alpha: 1.00)
             passwordCopyButton.layer.cornerRadius = 25
             headerContainer.addSubview(passwordCopyButton)
 
