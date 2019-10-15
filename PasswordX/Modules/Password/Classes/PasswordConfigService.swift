@@ -91,9 +91,7 @@ class PasswordConfigService {
 
     func addIdentity(id: String) {
         var temp = identityHistory
-        if  temp.contains(id) {
-            temp.removeAll(where: { $0 == id})
-        }
+        temp.removeAll(where: { $0 == id})
         temp.insert(id, at: 0)
         identityHistory = temp
     }
@@ -102,11 +100,13 @@ class PasswordConfigService {
         identityHistory = identityHistory.filter({ $0 != id })
     }
 
-    func reloadConfig() {
-        if let json =  UserDefaults.passwordGroup.data(forKey: Config.configCacheKey),
-            let model = try? JSONDecoder().decode(PasswordConfig.self, from: json) {
-            self.configValue = model
+    func reloadConfig() throws {
+        guard let json =  UserDefaults.passwordGroup.data(forKey: Config.configCacheKey)  else {
+            return
         }
+        let model = try JSONDecoder().decode(PasswordConfig.self, from: json)
+        try update(config: model)
+
     }
 
 }
