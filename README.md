@@ -9,6 +9,15 @@
 ![](./Resource/AppPreview.png)
 
 
+### Appstore
+
+iOS [https://apps.apple.com/us/app/id1483366606]https://apps.apple.com/us/app/id1483366606
+
+macOS [https://apps.apple.com/us/app/id1483367513]https://apps.apple.com/us/app/id1483367513
+
+
+---
+
 
 ### English
 
@@ -23,6 +32,8 @@ We support password custom styles:
 - Password style symbols: none, comma, period, underscore, hyphen
 - Encryption method: MD5, SHA1, SHA224, SHA256, SHA384, SHA512, CRC32, CRC32C, CRC16, AES128, AES192, AES256, ChaCha20, Rabbit, Blowfish
 
+
+---
 
 
 ### 中文
@@ -43,6 +54,9 @@ We support password custom styles:
 - 加密方式： MD5, SHA1, SHA224, SHA256, SHA384, SHA512, CRC32, CRC32C, CRC16, AES128, AES192, AES256, ChaCha20, Rabbit, Blowfish
 
   
+  
+---
+  
 
 ## Requirements
 
@@ -53,11 +67,15 @@ We support password custom styles:
 - Xcode 11.0
   
 
+---
+
 
 ## Contribute
 
 We would love for you to contribute to **PasswordX**, check the `LICENSE` file for more info.
 
+
+---
 
 
 ## Meta
