@@ -460,7 +460,7 @@ private protocol CipherPasswordCryptor: PasswordCryptor {
 extension CipherPasswordCryptor {
     func generateRawPassword(masterKey: String, identity: String) throws -> String {
         var keyRaw = masterKey
-        var iv = Array<UInt8>(repeating: 0, count: ivLength)
+        var iv = [UInt8](repeating: 0, count: ivLength)
 
         if let checkSum = (masterKey + identity).data(using: .utf8)?.checksum() {
             keyRaw = "\(checkSum % 99)\(keyRaw)"
@@ -474,7 +474,7 @@ extension CipherPasswordCryptor {
 
         var key = try JSONEncoder().encode(keyRaw).base64EncodedData().prefix(keyLength)
         if key.count < keyLength {
-            key.append(contentsOf: Array<UInt8>(repeating: 0, count: keyLength - key.count))
+            key.append(contentsOf: [UInt8](repeating: 0, count: keyLength - key.count))
         }
 
         let identityData = (try JSONEncoder().encode(identity)).base64EncodedData().bytes

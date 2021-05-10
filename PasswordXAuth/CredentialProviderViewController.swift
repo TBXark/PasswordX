@@ -106,7 +106,7 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
 }
 
 extension CredentialProviderViewController: UITableViewDelegate, UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -125,8 +125,6 @@ extension CredentialProviderViewController: UITableViewDelegate, UITableViewData
         tableView.endUpdates()
     }
 
-
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }

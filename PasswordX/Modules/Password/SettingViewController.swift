@@ -350,7 +350,7 @@ extension PasswordStyle {
         case .character:
             return "xxxxxxxxxx"
         case .word(let separator, let length):
-            return Array<String>(repeating: Array<String>(repeating: "x", count: length).joined(), count: 3).joined(separator: separator.char)
+            return [String](repeating: [String](repeating: "x", count: length).joined(), count: 3).joined(separator: separator.char)
         }
     }
 

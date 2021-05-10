@@ -78,11 +78,11 @@ class GeneratorViewController: UIViewController {
             para.alignment = .center
             para.paragraphSpacing = 6
             let attr = NSMutableAttributedString(string: "PasswordX\n",
-                                                 attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 30),
+                                                 attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30),
                                                               NSAttributedString.Key.foregroundColor: UIColor.white,
                                                               NSAttributedString.Key.paragraphStyle: para])
             attr.append(NSAttributedString(string: "Master key + Identity + Configuration = Unique password",
-                                           attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12),
+                                           attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
                                            NSAttributedString.Key.foregroundColor: UIColor.white,
                                            NSAttributedString.Key.paragraphStyle: para]))
             label.attributedText = attr
